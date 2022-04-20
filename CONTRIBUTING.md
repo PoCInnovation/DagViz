@@ -2,12 +2,12 @@
 
 ## Create an issue
 
-- If you've encountered a bug, open a [Bug Report](https://github.com/PoCInnovation/$REPOSITORY/issues/new?assignees=&labels=&template=bug_report.md&title=).
-- If you want DagViz to have a new fonctionality, open a [Feature Request](https://github.com/PoCInnovation/$REPOSITORY/issues/new?assignees=&labels=&template=feature_request.md&title=).
+- If you've encountered a bug, open a [Bug Report](https://github.com/PoCInnovation/DagViz/issues/new?assignees=&labels=&template=bug_report.md&title=).
+- If you want DagViz to have a new fonctionality, open a [Feature Request](https://github.com/PoCInnovation/DagViz/issues/new?assignees=&labels=&template=feature_request.md&title=).
 
 ## Resolve an issue
 
-Select an [issue](https://github.com/PoCInnovation/$REPOSITORY/issues) that you want to resolve.
+Select an [issue](https://github.com/PoCInnovation/DagViz/issues) that you want to resolve.
 
 The recommended workflow is to fork this repository and open pull requests from your fork.
 
@@ -19,10 +19,10 @@ The recommended workflow is to fork this repository and open pull requests from 
 
 ```sh
 # Clone original repository
-git clone git@github.com:PoCInnovation/$REPOSITORY.git
+git clone git@github.com:PoCInnovation/DagViz.git
 
 # Add your fork as a remove
-git remote add <fork_name> https://github.com/$YOUR_GITHUB_USER/$REPOSITORY.git
+git remote add <fork_name> https://github.com/$YOUR_GITHUB_USER/DagViz.git
 ```
 
 ### 2. Create a pull request
@@ -40,7 +40,7 @@ git commit -s
 # Push your new branch
 git push <fork name>
 
-# Create a new pull request from https://github.com/PoCInnovation/$REPOSITORY/pulls
+# Create a new pull request from https://github.com/PoCInnovation/DagViz/pulls
 ```
 
 ### 3. Update your pull request with latest changes
