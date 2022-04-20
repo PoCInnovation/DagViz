@@ -1,9 +1,9 @@
-# Contributing to [PROJECT'S NAME]
+# Contributing to DagViz
 
 ## Create an issue
 
 - If you've encountered a bug, open a [Bug Report](https://github.com/PoCInnovation/$REPOSITORY/issues/new?assignees=&labels=&template=bug_report.md&title=).
-- If you want [PROJECT'S NAME] to have a new fonctionality, open a [Feature Request](https://github.com/PoCInnovation/$REPOSITORY/issues/new?assignees=&labels=&template=feature_request.md&title=).
+- If you want DagViz to have a new fonctionality, open a [Feature Request](https://github.com/PoCInnovation/$REPOSITORY/issues/new?assignees=&labels=&template=feature_request.md&title=).
 
 ## Resolve an issue
 
@@ -11,7 +11,7 @@ Select an [issue](https://github.com/PoCInnovation/$REPOSITORY/issues) that you 
 
 The recommended workflow is to fork this repository and open pull requests from your fork.
 
-### 1. Fork, clone & configure [PROJECT'S NAME] upstream
+### 1. Fork, clone & configure DagViz upstream
 
 - Click on the _Fork_ button on GitHub
 - Clone the original repository
