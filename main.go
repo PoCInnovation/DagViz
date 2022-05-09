@@ -6,15 +6,15 @@ import (
 
 func main() {
 	/*root := lib.CreateDag("firstDag")
-	node1 := lib.CreateNode(root, "TEST1")
-	node2 := lib.CreateNode(root, []string{"info-1", "info-2"})
-	lib.CreateNode(root, "LINK")
-	node1.BothLinkTo(node2)
+	node1 := lib.AttachNode(root, "TEST1")
+	node2 := lib.AttachNode(root, []string{"info-1", "info-2"})
+	lib.AttachNode(root, "LINK")
+	node1.BothLinksTo(node2)
 	root.PrintDag("---")*/
 
 	root2 := lib.CreateDag("Alex")
-	node3 := lib.CreateNode(root2, "Ismael")
-	node4 := lib.CreateNode(root2, "Elie")
-	node3.BothLinkTo(node4)
+	node3 := root2.AttachNode("Ismael")
+	node4 := root2.AttachNode("Elie")
+	node3.BothLinksTo(node4)
 	root2.PrintDag("---")
 }
