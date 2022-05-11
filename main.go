@@ -16,12 +16,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	value, err := cuetojson.LoadFile(context, args[1])
+	programs, err := cuetojson.LoadFile(context, args[1])
 
 	if err != nil {
 		return
 	}
 
-	cuetojson.PrintAsJSON(value)
-	cuetojson.PrintAsCUE(value)
+	infos := cuetojson.ExtractInfos(programs)
+	cuetojson.PrintAsJSON(infos)
 }

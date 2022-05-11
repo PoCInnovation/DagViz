@@ -1,14 +1,16 @@
 package cuetojson
 
 import (
-	"cuelang.org/go/cue"
+	"encoding/json"
 	"fmt"
 )
 
-func PrintAsJSON(value *cue.Value) {
-	fmt.Printf("JSON Format:\n%v\n", value)
-}
+func PrintAsJSON(infos []CueInfos) {
+	packed, err := json.MarshalIndent(infos, "", "  ")
 
-func PrintAsCUE(value *cue.Value) {
-	fmt.Printf("CUE Format:\n%#v\n", value)
+	if err != nil {
+		fmt.Printf("An error occured: %s\n", err.Error())
+		return
+	}
+	fmt.Printf("%s\n", string(packed))
 }
