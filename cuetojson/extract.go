@@ -20,6 +20,11 @@ func ExtractInfos(programs []CueProgram) []CueInfos {
 	for _, program := range programs {
 		info := CueInfos{}
 		info.Values = program.Values
+		info.Tags = program.Instance.AllTags
+		info.Root = program.Instance.Root
+		info.Module = program.Instance.Module
+		info.Package = program.Instance.PkgName
+		info.Dependencies = program.Instance.Deps
 		info.Files = extractFiles(program.Instance.Files)
 		info.Directory = program.Instance.Dir
 
