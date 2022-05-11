@@ -11,5 +11,7 @@ type CueProgram struct {
 }
 
 type CueInfos struct {
-	Values *cue.Value `json:"values"`
+	Values    *cue.Value `json:"values"`
+	Directory string     `json:"directory"`
+	Files     []string   `json:"files"`
 }
