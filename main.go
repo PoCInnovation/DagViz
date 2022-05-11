@@ -22,5 +22,6 @@ func main() {
 		return
 	}
 
-	fmt.Printf("%v\n", value)
+	cuetojson.PrintAsJSON(value)
+	cuetojson.PrintAsCUE(value)
 }
