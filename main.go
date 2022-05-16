@@ -2,7 +2,7 @@ package main
 
 import (
 	"cuelang.org/go/cue/cuecontext"
-	"cuetojson/cuetojson"
+	"dag/cuetojson"
 	"fmt"
 	"os"
 )

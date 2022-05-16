@@ -2,8 +2,9 @@ module dag
 
 go 1.18
 
+require cuelang.org/go v0.4.3
+
 require (
-	cuelang.org/go v0.4.3 // indirect
 	github.com/cockroachdb/apd/v2 v2.0.1 // indirect
 	github.com/emicklei/proto v1.6.15 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
