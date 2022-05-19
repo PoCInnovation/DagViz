@@ -1,4 +1,4 @@
-module dag
+module dagviz
 
 go 1.18
 
