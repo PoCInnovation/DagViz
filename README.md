@@ -1,18 +1,18 @@
 # DagViz
 
-[Project's description]
+The objective of this project is to display any infos about Go program using dags.
 
 ## How does it work?
 
-The objective of this project is to display any infos about Go program using dags.
-
+Thanks to CueAPI we can retrieve any infos about our program and we create a dag using
+these infos.
 ## Getting Started
 
 ### Installation
 
 You needed to install [Go](https://go.dev/doc/install).
 
-####install DagViz
+#### Install DagViz
 ```
 # Get the project
 git clone git@github.com:PoCInnovation/DagViz.git

@@ -22,7 +22,7 @@
     ...
 }
 
-name: string
+name: "string"
 env: [string]: string | int
 on:  [string]: {...}
 jobs: [jobName=string]: #job
