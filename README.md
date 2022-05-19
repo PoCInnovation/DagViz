@@ -11,15 +11,22 @@ The objective of this project is to display any infos about Go program using dag
 ### Installation
 
 You needed to install [Go](https://go.dev/doc/install).
+
+####install DagViz
+```
+# Get the project
+git clone git@github.com:PoCInnovation/DagViz.git
+cd DagViz
+```
 ### Quickstart
 
-You must clone the repo using :`git clone git@github.com:PoCInnovation/DagViz.git`
+To run the tests :
 
-To run the tests :`go test ./test` at the root of the repo.
+```go test ./test```
 
 ### Usage
 
-Use the command : `go run . ($CueProgram)` to get any info you need about your Cue program
+```go run . ($CueProgram)```
 
 ## Get involved
 
