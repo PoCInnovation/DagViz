@@ -1,12 +1,12 @@
 package tests
 
 import (
-	"dagviz/lib"
+	"dagviz/dag"
 	"testing"
 )
 
 func TestDag(t *testing.T) {
-	got := lib.CreateDag("test")
+	got := dag.CreateDag("test")
 	want := "test"
 
 	if got.Name != want {
@@ -15,8 +15,8 @@ func TestDag(t *testing.T) {
 }
 
 func TestGetValue(t *testing.T) {
-	dag := lib.CreateDag("test")
-	testNode := dag.AttachNode("testNode")
+	dag1 := dag.CreateDag("test")
+	testNode := dag1.AttachNode("testNode")
 
 	if testNode.Value != "testNode" {
 		t.Errorf("got %s but wanted %s", testNode.Value, "test")
@@ -24,7 +24,7 @@ func TestGetValue(t *testing.T) {
 }
 
 func TestLinkTo(t *testing.T) {
-	dag := lib.CreateDag("test")
+	dag := dag.CreateDag("test")
 	testNode := dag.AttachNode("testNode")
 	testNode2 := dag.AttachNode("testNode2")
 	testNode3 := dag.AttachNode("testNode3")
@@ -40,7 +40,7 @@ func TestLinkTo(t *testing.T) {
 }
 
 func TestBothLinkTo(t *testing.T) {
-	dag := lib.CreateDag("test")
+	dag := dag.CreateDag("test")
 	testNode1 := dag.AttachNode("testNode1")
 	testNode2 := dag.AttachNode("testNode2")
 	testNode3 := dag.AttachNode("testNode3")
@@ -62,7 +62,7 @@ func TestBothLinkTo(t *testing.T) {
 }
 
 func TestRemoveLinkTo(t *testing.T) {
-	dag := lib.CreateDag("test")
+	dag := dag.CreateDag("test")
 	testNode := dag.AttachNode("testNode1")
 	testNode2 := dag.AttachNode("testNode2")
 	testNode3 := dag.AttachNode("testNode3")
@@ -84,7 +84,7 @@ func TestRemoveLinkTo(t *testing.T) {
 }
 
 func TestRemoveNode(t *testing.T) {
-	dag := lib.CreateDag("test")
+	dag := dag.CreateDag("test")
 	testNode := dag.AttachNode("testNode1")
 	testNode2 := dag.AttachNode("testNode2")
 	testNode3 := dag.AttachNode("testNode3")

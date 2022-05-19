@@ -12,6 +12,7 @@ these infos.
 
 You needed to install [Go](https://go.dev/doc/install).
 
+
 #### Install DagViz
 ```
 # Get the project
