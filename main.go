@@ -1,20 +1,27 @@
 package main
 
 import (
-	"dag/lib"
+	"cuelang.org/go/cue/cuecontext"
+	"dag/cuetojson"
+	"fmt"
+	"os"
 )
 
 func main() {
-	/*root := lib.CreateDag("firstDag")
-	node1 := lib.AttachNode(root, "TEST1")
-	node2 := lib.AttachNode(root, []string{"info-1", "info-2"})
-	lib.AttachNode(root, "LINK")
-	node1.BothLinksTo(node2)
-	root.PrintDag("---")*/
+	args := os.Args
+	context := cuecontext.New()
 
-	root2 := lib.CreateDag("Alex")
-	node3 := root2.AttachNode("Ismael")
-	node4 := root2.AttachNode("Elie")
-	node3.BothLinksTo(node4)
-	root2.PrintDag("---")
+	if len(args) != 2 {
+		fmt.Println("Error: A CUE file is required")
+		os.Exit(1)
+	}
+
+	programs, err := cuetojson.LoadFile(context, args[1])
+
+	if err != nil {
+		return
+	}
+
+	infos := cuetojson.ExtractInfos(programs)
+	cuetojson.PrintAsJSON(infos)
 }

@@ -1,0 +1,72 @@
+name: chocolatine
+on:
+  push:
+    branches-ignore:
+      - "ga-ignore"
+  pull_request:
+    branches-ignore:
+      - "ga-ignore"
+env:
+  MIRROR_URL: "git@github.com:Doozers/CSFML-automation.git"
+  EXECUTABLES: ""
+jobs:
+  check_repository_cleanliness:
+    name: "Check if the repository is clean"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: check_repository_cleanliness
+      - run: |
+          BAD_FILES=$(find . -type f -not -path "./.git/*" -wholename "*tmp/*" -or -name "#*#" -or -name "*~" -or -iname "*pain_au_chocolat*" -or -name "*.o" -or -name "*.a" -or -name "*.so" -or -name "*.gcno" -or -name "*.gdca" -or -name "*.gcov")
+          for FILES in $BAD_FILES; do
+            echo "::error file=${FILE#./}, title=Unwanted file detected::${FILE#./}"
+          done
+          if [ "$BAD_FILES" != ""]; then
+            exit 1
+          fi
+
+  check_program_compilation:
+    needs: [check_repository_cleanliness]
+    name: "check if the make compil"
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: check_program_compilation
+      - run: make
+      - timeout-minutes: 2
+      - run: make clean
+      - run: |
+          OIFS=$IFS
+          IFS=','
+          for x in $EXECUTABLES
+            do
+              ./$x
+            done
+          IFS=$OIFS
+
+  run_tests:
+    needs: [check_program_compilation]
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: run_tests
+      - run: make tests_run
+      - timeout-minutes: 2
+
+  push_to_mirror:
+    needs: [run_tests]
+    if: ${{ github.event_name == 'push' }}
+    name: "Push to mirror"
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL }}
+          ssh_private_key:
+            ${{ secrets.GIT_SSH_PRIVATE_KEY }}

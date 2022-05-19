@@ -1,2 +1,4 @@
-.idea
-.vscode
+.idea/
+cuetojson
+!cuetojson/
+.vscode/
