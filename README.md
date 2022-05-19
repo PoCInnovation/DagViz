@@ -23,11 +23,15 @@ cd DagViz
 
 To run the tests :
 
-```go test ./test```
+```
+go test ./test
+```
 
 ### Usage
 
-```go run . ($CueProgram)```
+```
+go run . [$path_to_cue_program]
+```
 
 ## Get involved
 
