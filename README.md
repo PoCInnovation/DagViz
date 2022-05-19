@@ -4,21 +4,22 @@
 
 ## How does it work?
 
-[Explain how this project is working]
+The objective of this project is to display any infos about Go program using dags.
 
 ## Getting Started
 
 ### Installation
 
-[Explain how to install all of the project's dependencies]
-
+You needed to install [Go](https://go.dev/doc/install).
 ### Quickstart
 
-[Explain how to run this project]
+You must clone the repo using :`git clone git@github.com:PoCInnovation/DagViz.git`
+
+To run the tests :`go test ./test` at the root of the repo.
 
 ### Usage
 
-[Explain how to use this project]
+Use the command : `go run . ($CueProgram)` to get any info you need about your Cue program
 
 ## Get involved
 
