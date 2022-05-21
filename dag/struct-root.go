@@ -12,7 +12,8 @@ type Root struct {
 func (r *Root) PrintDag(i interface{}) {
 	fmt.Println("Root:", r.Name, "\n")
 	for _, m := range r.Members {
-		m.GetValue(i)
+		m.GetValue(i, 0)
+		fmt.Println("\n\n")
 	}
 }
 
