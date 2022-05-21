@@ -1,21 +1,10 @@
-#steps: "steps": {
-			"Steps1": {
-				"name":            "string"
-				"timeout-minutes": 10
-				"uses":            "actions/checkout@v2"
-				"with": {
-					"repo": "string"
-					"branch": "string"
-				}
-			}
-		}
-
 name: "string"
 env: {
 	"ENVIR":  "ENV"
 	"ENVIR2": "ENV2"
 	"ENVIR3": "ENV3"
 }
+
 on: {
 	"push-to": [
 		"string1",
@@ -33,6 +22,16 @@ jobs: {
 			"job1",
 			"job2",
 		]
-		#steps
+		"steps": {
+			"Steps1": {
+				"name":            "string"
+				"timeout-minutes": 10
+				"uses":            "actions/checkout@v2"
+				"with": {
+					"repo": "string"
+					"branch": "string"
+				}
+			}
+		}
 	}
 }

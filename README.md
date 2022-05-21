@@ -24,7 +24,7 @@ cd DagViz
 To run the tests :
 
 ```
-go test ./test -v
+go test ./test -v -race
 ```
 
 ### Usage
