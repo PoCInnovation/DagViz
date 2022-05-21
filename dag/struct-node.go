@@ -7,15 +7,15 @@ type Node struct {
 	Links []*Node
 }
 
-func (n *Node) GetValue(i interface{}) {
+func (n *Node) GetValue(i interface{}, indent int) {
 	if n.Value != nil {
+		for i := 0; i < indent; i++ {
+			fmt.Print("-->")
+		}
 		fmt.Println(i, n.Value)
 	}
-
 	for _, link := range n.Links {
-		if link.Value != nil {
-			fmt.Println(i, "--->", link.Value, "\n")
-		}
+		link.GetValue(*link, indent+1)
 	}
 }
 
