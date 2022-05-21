@@ -3,6 +3,7 @@ package main
 import (
 	"cuelang.org/go/cue/cuecontext"
 	"dagviz/cuetojson"
+	"dagviz/dag"
 	"fmt"
 	"os"
 )
@@ -22,6 +23,9 @@ func main() {
 		return
 	}
 
-	infos := cuetojson.ExtractInfos(programs)
-	cuetojson.PrintAsJSON(infos)
+	root := dag.CreateDag("dag")
+	cuetojson.AppendValuesToDag(root, programs)
+
+	//infos := cuetojson.ExtractInfos(programs)
+	//cuetojson.PrintAsJSON(infos)
 }
