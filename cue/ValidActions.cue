@@ -1,28 +1,38 @@
-#Steps: {
-    name?: string
-    "timeout-minutes": *10 | >=0
-
-    *{
-        uses: "actions/checkout@v2"
-        with?: [string]: string
-    } | {
-        run: [...string]
-    }
-    ...
-}
-
-#job: {
-    name: string
-    "runs-on": "ubuntu-latest"
-    container?: {
-        image: string
-    }
-    needs?: [...string]
-    steps: [...#Steps]
-    ...
-}
+#steps: "steps": {
+			"Steps1": {
+				"name":            "string"
+				"timeout-minutes": 10
+				"uses":            "actions/checkout@v2"
+				"with": {
+					"repo": "string"
+					"branch": "string"
+				}
+			}
+		}
 
 name: "string"
-env: [string]: string | int
-on:  [string]: {...}
-jobs: [jobName=string]: #job
+env: {
+	"ENVIR":  "ENV"
+	"ENVIR2": "ENV2"
+	"ENVIR3": "ENV3"
+}
+on: {
+	"push-to": [
+		"string1",
+		"string2",
+	]
+}
+jobs: {
+	"job": {
+		"name":    "job1"
+		"runs-on": "ubuntu-latest"
+		"container": {
+			"image": "string"
+		}
+		"needs": [
+			"job1",
+			"job2",
+		]
+		#steps
+	}
+}
