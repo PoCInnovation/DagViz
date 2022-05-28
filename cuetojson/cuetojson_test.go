@@ -1,8 +1,7 @@
-package tests
+package cuetojson
 
 import (
 	"cuelang.org/go/cue/cuecontext"
-	"dagviz/cuetojson"
 	"fmt"
 	"strings"
 	"testing"
@@ -11,7 +10,7 @@ import (
 func TestSimpleCue(t *testing.T) {
 	file := "../samples/simple.cue"
 	context := cuecontext.New()
-	result, err := cuetojson.LoadFile(context, file)
+	result, err := LoadFile(context, file)
 
 	lenExpected := 1
 	valueExpected := "{\n        hello: \"world\"\n}"
