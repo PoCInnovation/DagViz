@@ -6,4 +6,8 @@ hello: {
 	    }
 	}
 }
-info: "bonsoir"
+info: [
+	10,
+	20,
+	30
+]

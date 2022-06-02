@@ -3,6 +3,7 @@ package cuetojson
 import (
 	"cuelang.org/go/cue"
 	"dagviz/dag"
+	"fmt"
 )
 
 func AppendValuesToDag(root *dag.Root, programs []CueProgram) {
@@ -23,9 +24,11 @@ func addNode(root *dag.Root, node *dag.Node, value *cue.Value, prev *cue.Iterato
 
 	for iterator.Next() {
 		v := iterator.Value()
+		fmt.Printf("%v\n", v)
 		_, err = v.Fields()
 
 		if err != nil {
+			fmt.Printf("Error on %v\n", v)
 			addNode(root, node, &v, iterator)
 		} else {
 			addNode(root, addToDag(root, node, iterator.Label()), &v, iterator)
@@ -44,10 +47,7 @@ func addToDag(root *dag.Root, node *dag.Node, content string) *dag.Node {
 }
 
 func addDagEdge(root *dag.Root, node *dag.Node, key string, value *cue.Value) {
-	v, err := value.String()
-	if err != nil {
-		return
-	}
+	v := fmt.Sprintf("%v", value)
 	format := key + " = " + v
 	addToDag(root, node, format)
 }
