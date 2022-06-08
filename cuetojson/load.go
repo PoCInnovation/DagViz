@@ -7,10 +7,17 @@ import (
 )
 
 func LoadFile(context *cue.Context, path string) ([]CueProgram, error) {
-	singleton := []string{path}
-	instances := load.Instances(singleton, nil)
+	singleton := []string{"dagger/cue.mod/pkg/universe.dagger.io/git/git.cue"}
+	config := load.Config{
+		Dir:        ".",
+		Package:    "*",
+		ModuleRoot: ".",
+		Module:     "root",
+	}
+	instances := load.Instances(singleton, &config)
 	var programs []CueProgram
 
+	fmt.Printf("%d %d\n", len(instances), len(instances[0].Files))
 	if len(instances) == 0 {
 		return nil, fmt.Errorf("Error: Cannot load %s\n", path)
 	}

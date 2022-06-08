@@ -24,11 +24,9 @@ func addNode(root *dag.Root, node *dag.Node, value *cue.Value, prev *cue.Iterato
 
 	for iterator.Next() {
 		v := iterator.Value()
-		fmt.Printf("%v\n", v)
 		_, err = v.Fields()
 
 		if err != nil {
-			fmt.Printf("Error on %v\n", v)
 			addNode(root, node, &v, iterator)
 		} else {
 			addNode(root, addToDag(root, node, iterator.Label()), &v, iterator)
