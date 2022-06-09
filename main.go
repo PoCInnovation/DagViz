@@ -17,7 +17,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	programs, err := cuetojson.LoadFile(context, args[1])
+	programs, err := cuetojson.LoadFile(context, args[1], nil)
 
 	if err != nil {
 		return

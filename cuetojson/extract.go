@@ -19,7 +19,7 @@ func ExtractInfos(programs []CueProgram) []CueInfos {
 
 	for _, program := range programs {
 		info := CueInfos{}
-		info.Values = program.Values
+		info.Values = program.Values.Value()
 		info.Tags = program.Instance.AllTags
 		info.Root = program.Instance.Root
 		info.Module = program.Instance.Module
