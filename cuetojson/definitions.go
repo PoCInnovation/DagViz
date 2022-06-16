@@ -3,6 +3,7 @@ package cuetojson
 import (
 	"dagviz/dag"
 	"os"
+	"regexp"
 )
 
 func LinkDefinitions(infos []CueInfos, root *dag.Root) {
@@ -23,7 +24,10 @@ func LinkDefinitions(infos []CueInfos, root *dag.Root) {
 }
 
 func parseDefinitions(content string) []string {
-	return []string{}
+	regex := regexp.MustCompile("#[^ ]+")
+	array := regex.FindAllString(content, -1)
+
+	return array
 }
 
 func findDefinitions(definitions []string, node *dag.Node) {
