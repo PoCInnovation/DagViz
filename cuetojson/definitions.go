@@ -12,7 +12,9 @@ func LinkDefinitions(infos []CueInfos, root *dag.Root) {
 	definitionsNode := root.AttachNode("definitions")
 
 	for _, program := range infos {
-
+		for _, dep := range program.getDependencies() {
+			fmt.Println(dep)
+		}
 		for _, file := range program.Files {
 			content, err := os.ReadFile(file)
 
@@ -68,7 +70,7 @@ func defineNeedle(file string, needle string) (bool, Definition) {
 		return false, Definition{}
 	}
 	stringFile := string(byteFile)
-	reg := regexp.MustCompile(fmt.Sprintf("\n%s: {", needle))
+	reg := regexp.MustCompile(fmt.Sprintf("\n%s: ", needle))
 	//regDef := regex.String(fmt.Sprintf("\n%s: .+[\n}]/gms", needle))
 	if reg.MatchString(stringFile) {
 		return true, Definition{file, ""}
