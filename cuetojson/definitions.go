@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strings"
 )
 
 func LinkDefinitions(infos []CueInfos, root *dag.Root) {
@@ -19,15 +20,24 @@ func LinkDefinitions(infos []CueInfos, root *dag.Root) {
 			}
 
 			definitions := parseDefinitions(string(content))
-			addDefinitionsToDag(definitions, definitionsNode)
+			addDefinitionsToDag(definitions, program.getDependencies(), program.Root, definitionsNode)
 		}
 	}
 }
 
-func addDefinitionsToDag(definitions []string, node *dag.Node) {
+func addDefinitionsToDag(definitions []string, buildFiles []string, root string, node *dag.Node) {
 	for _, definition := range definitions {
-		def := &dag.Node{Value: definition}
-		node.LinksTo(def)
+		defNode := &dag.Node{Value: definition}
+		linkNode := &dag.Node{Value: "Definition not found"}
+		node.LinksTo(defNode)
+		defNode.LinksTo(linkNode)
+
+		link, err := findDefinition(buildFiles, definition)
+		if err != nil {
+			continue
+		}
+
+		linkNode.Value = strings.Replace(link.file, root, "", -1)
 	}
 }
 
@@ -36,6 +46,15 @@ func parseDefinitions(content string) []string {
 	array := regex.FindAllString(content, -1)
 
 	return array
+}
+
+func findDefinition(files []string, needle string) (Definition, error) {
+	for _, file := range files {
+		if boole, def := defineNeedle(file, needle); boole {
+			return def, nil
+		}
+	}
+	return Definition{}, fmt.Errorf("could not find definition for %s", needle)
 }
 
 func defineNeedle(file string, needle string) (bool, Definition) {
@@ -51,13 +70,4 @@ func defineNeedle(file string, needle string) (bool, Definition) {
 		return true, Definition{file, ""}
 	}
 	return false, Definition{}
-}
-
-func findDefinition(files []string, needle string) (Definition, error) {
-	for _, file := range files {
-		if boole, def := defineNeedle(file, needle); boole {
-			return def, nil
-		}
-	}
-	return Definition{}, fmt.Errorf("could not find definition for %s", needle)
 }

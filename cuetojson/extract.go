@@ -61,3 +61,12 @@ func ExtractInfos(programs []CueProgram) []CueInfos {
 	}
 	return infos
 }
+
+func (infos CueInfos) getDependencies() []string {
+	var array []string
+
+	for _, sub := range infos.Imports {
+		array = append(array, sub.Files...)
+	}
+	return array
+}
