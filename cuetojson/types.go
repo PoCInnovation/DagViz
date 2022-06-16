@@ -24,3 +24,8 @@ type CueInfos struct {
 	OrphanedFiles []string
 	Imports       []CueInfos
 }
+
+type Definition struct {
+	file string
+	def  string
+}
