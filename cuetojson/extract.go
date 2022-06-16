@@ -8,6 +8,9 @@ import (
 func extractFiles(files []*ast.File) []string {
 	var array []string
 
+	if files == nil {
+		return make([]string, 0)
+	}
 	for _, file := range files {
 		array = append(array, file.Filename)
 	}
@@ -18,6 +21,9 @@ func extractFiles(files []*ast.File) []string {
 func extractBuildFiles(files []*build.File) []string {
 	var array []string
 
+	if files == nil {
+		return make([]string, 0)
+	}
 	for _, file := range files {
 		array = append(array, file.Filename)
 	}
@@ -35,16 +41,20 @@ func ExtractInfos(programs []CueProgram) []CueInfos {
 		info.Module = program.Instance.Module
 		info.Package = program.Instance.PkgName
 		info.Dependencies = program.Instance.Deps
+		info.Directory = program.Instance.Dir
 		info.Files = extractFiles(program.Instance.Files)
 		info.BuildFiles = extractBuildFiles(program.Instance.BuildFiles)
+		info.InvalidFiles = extractBuildFiles(program.Instance.InvalidFiles)
+		info.IgnoredFiles = extractBuildFiles(program.Instance.IgnoredFiles)
+		info.OrphanedFiles = extractBuildFiles(program.Instance.OrphanedFiles)
+
+		infos = append(infos, info)
+
 		for _, imports := range program.Instance.Imports {
 			program := CueProgram{imports, nil}
 			sub := ExtractInfos([]CueProgram{program})
 			infos = append(infos, sub...)
 		}
-		info.Directory = program.Instance.Dir
-
-		infos = append(infos, info)
 	}
 	return infos
 }
