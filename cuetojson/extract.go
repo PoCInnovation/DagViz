@@ -67,6 +67,8 @@ func (infos CueInfos) getDependencies() []string {
 
 	for _, sub := range infos.Imports {
 		array = append(array, sub.Files...)
+		imports := sub.getDependencies()
+		array = append(array, imports...)
 	}
 	return array
 }

@@ -12,19 +12,15 @@ func LinkDefinitions(infos []CueInfos, root *dag.Root) {
 	definitionsNode := root.AttachNode("definitions")
 
 	for _, program := range infos {
-		for _, dep := range program.getDependencies() {
-			fmt.Println(dep)
-		}
 		for _, file := range program.Files {
 			content, err := os.ReadFile(file)
-
-			deps := program.getDependencies()
-			deps = append(deps, file)
 
 			if err != nil {
 				continue
 			}
 
+			deps := program.getDependencies()
+			deps = append(deps, file)
 			definitions := parseDefinitions(string(content))
 			addDefinitionsToDag(definitions, deps, program.Root, definitionsNode)
 		}
@@ -48,10 +44,18 @@ func addDefinitionsToDag(definitions []string, buildFiles []string, root string,
 }
 
 func parseDefinitions(content string) []string {
+	var definitions []string
+
 	regex := regexp.MustCompile("#[^ ,\n]+")
 	array := regex.FindAllString(content, -1)
 
-	return array
+	for _, def := range array {
+		if !strings.HasSuffix(def, ":") {
+			definitions = append(definitions, def)
+		}
+	}
+
+	return definitions
 }
 
 func findDefinition(files []string, needle string) (Definition, error) {
