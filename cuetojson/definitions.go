@@ -12,15 +12,19 @@ func LinkDefinitions(infos []CueInfos, root *dag.Root) {
 	definitionsNode := root.AttachNode("definitions")
 
 	for _, program := range infos {
+
 		for _, file := range program.Files {
 			content, err := os.ReadFile(file)
+
+			deps := program.getDependencies()
+			deps = append(deps, file)
 
 			if err != nil {
 				continue
 			}
 
 			definitions := parseDefinitions(string(content))
-			addDefinitionsToDag(definitions, program.getDependencies(), program.Root, definitionsNode)
+			addDefinitionsToDag(definitions, deps, program.Root, definitionsNode)
 		}
 	}
 }
@@ -42,7 +46,7 @@ func addDefinitionsToDag(definitions []string, buildFiles []string, root string,
 }
 
 func parseDefinitions(content string) []string {
-	regex := regexp.MustCompile("#[^ ]+")
+	regex := regexp.MustCompile("#[^ ,\n]+")
 	array := regex.FindAllString(content, -1)
 
 	return array
@@ -65,7 +69,7 @@ func defineNeedle(file string, needle string) (bool, Definition) {
 	}
 	stringFile := string(byteFile)
 	reg := regexp.MustCompile(fmt.Sprintf("\n%s: {", needle))
-	//regDef := regexp.MustCompile(fmt.Sprintf("\n%s: .+[\n}]/gms", needle))
+	//regDef := regex.String(fmt.Sprintf("\n%s: .+[\n}]/gms", needle))
 	if reg.MatchString(stringFile) {
 		return true, Definition{file, ""}
 	}
