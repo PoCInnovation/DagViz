@@ -11,15 +11,16 @@ type CueProgram struct {
 }
 
 type CueInfos struct {
-	Tags          []string `json:"tags"`
-	Root          string   `json:"root"`
-	Module        string   `json:"module"`
-	Package       string   `json:"package"`
-	Dependencies  []string `json:"dependencies"`
-	Directory     string   `json:"directory"`
-	Files         []string `json:"files"`
-	BuildFiles    []string `json:"build_files"`
-	InvalidFiles  []string `json:"invalid_files"`
-	IgnoredFiles  []string `json:"ignored_files"`
-	OrphanedFiles []string `json:"orphaned_files"`
+	Tags          []string
+	Root          string
+	Module        string
+	Package       string
+	Dependencies  []string
+	Directory     string
+	Files         []string
+	BuildFiles    []string
+	InvalidFiles  []string
+	IgnoredFiles  []string
+	OrphanedFiles []string
+	Imports       []CueInfos
 }

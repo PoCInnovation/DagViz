@@ -48,7 +48,6 @@ func LoadFile(context *cue.Context, p string, overlay map[string]fs.FS) ([]CuePr
 	instances := load.Instances([]string{"."}, config)
 	var programs []CueProgram
 
-	fmt.Printf("%d %d\n", len(instances), len(instances[0].Files))
 	if len(instances) == 0 {
 		return nil, fmt.Errorf("Error: Cannot load %s\n", p)
 	}

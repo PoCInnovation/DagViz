@@ -23,9 +23,10 @@ func main() {
 		return
 	}
 
-	root := dag.CreateDag("dag")
-	cuetojson.AppendValuesToDag(root, programs)
-
 	infos := cuetojson.ExtractInfos(programs)
-	cuetojson.PrintAsJSON(infos)
+	root := dag.CreateDag("dag")
+
+	cuetojson.LinkDefinitions(infos, root)
+	root.PrintDag(" --> ")
+
 }

@@ -35,6 +35,8 @@ func ExtractInfos(programs []CueProgram) []CueInfos {
 	var infos []CueInfos
 
 	for _, program := range programs {
+		var importList []CueInfos
+
 		info := CueInfos{}
 		info.Tags = program.Instance.AllTags
 		info.Root = program.Instance.Root
@@ -48,13 +50,14 @@ func ExtractInfos(programs []CueProgram) []CueInfos {
 		info.IgnoredFiles = extractBuildFiles(program.Instance.IgnoredFiles)
 		info.OrphanedFiles = extractBuildFiles(program.Instance.OrphanedFiles)
 
-		infos = append(infos, info)
-
 		for _, imports := range program.Instance.Imports {
 			program := CueProgram{imports, nil}
 			sub := ExtractInfos([]CueProgram{program})
-			infos = append(infos, sub...)
+			importList = append(infos, sub...)
 		}
+		info.Imports = importList
+
+		infos = append(infos, info)
 	}
 	return infos
 }

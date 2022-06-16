@@ -10,7 +10,7 @@ func AppendValuesToDag(root *dag.Root, programs []CueProgram) {
 	for _, program := range programs {
 		addNode(root, nil, program.Values, nil)
 	}
-	root.PrintDag(" --> ")
+
 }
 
 func addNode(root *dag.Root, node *dag.Node, value *cue.Value, prev *cue.Iterator) {
