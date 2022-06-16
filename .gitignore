@@ -3,6 +3,7 @@
 /.idea
 /.vscode
 /dagger
+/foo
 
 # build files
 
