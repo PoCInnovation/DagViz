@@ -27,20 +27,28 @@ func LinkDefinitions(infos []CueInfos, root *dag.Root) {
 	}
 }
 
+type NodeDefinition struct {
+	name string
+	file string
+	def  string
+}
+
 func addDefinitionsToDag(definitions []string, buildFiles []string, root string, node *dag.Node) {
 	for _, definition := range definitions {
-		defNode := &dag.Node{Value: definition}
-		linkNode := &dag.Node{Value: "Definition not found"}
+		defNode := &dag.Node{}
 		node.LinksTo(defNode)
-		defNode.LinksTo(linkNode)
 
-		link, err := findDefinition(buildFiles, definition)
+		data, err := findDefinition(buildFiles, definition)
 		if err != nil {
 			continue
 		}
 
-		linkNode.Value = link.file
-		addDefinitionsToDag(parseDefinitions(link.def), buildFiles, root, linkNode)
+		defNode.Value = NodeDefinition{
+			name: definition,
+			file: data.file,
+			def:  "definition",
+		}
+		go addDefinitionsToDag(parseDefinitions(data.def), buildFiles, root, defNode)
 	}
 }
 
