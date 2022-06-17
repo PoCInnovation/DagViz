@@ -74,10 +74,29 @@ func defineNeedle(file string, needle string) (bool, Definition) {
 		return false, Definition{}
 	}
 	stringFile := string(byteFile)
-	reg := regexp.MustCompile(fmt.Sprintf("\n%s: ", needle))
-	//regDef := regex.String(fmt.Sprintf("\n%s: .+[\n}]/gms", needle))
+	reg := regexp.MustCompile("\n" + needle + ": ")
 	if reg.MatchString(stringFile) {
-		return true, Definition{file, ""}
+		def, err := extractDefinition(stringFile, needle)
+		if err != nil {
+			fmt.Println(err)
+			return false, Definition{}
+		}
+		return true, Definition{file, def}
 	}
 	return false, Definition{}
+}
+
+func extractDefinition(file string, needle string) (string, error) {
+	regDef := regexp.MustCompile("(?s)\n" + needle + ": {.+")
+	def := regDef.FindString(file)
+	for i, _ := range def {
+		if i > len(def)-1 {
+			return "", fmt.Errorf("could not find definition for %s", needle)
+		}
+
+		if def[i] == '\n' && def[i+1] == '}' {
+			return def[:i+1], nil
+		}
+	}
+	return "", fmt.Errorf("could not find definition for %s", needle)
 }
