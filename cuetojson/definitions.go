@@ -39,7 +39,8 @@ func addDefinitionsToDag(definitions []string, buildFiles []string, root string,
 			continue
 		}
 
-		linkNode.Value = strings.Replace(link.file, root, "", -1)
+		linkNode.Value = link.file
+		addDefinitionsToDag(parseDefinitions(link.def), buildFiles, root, linkNode)
 	}
 }
 
@@ -87,7 +88,7 @@ func defineNeedle(file string, needle string) (bool, Definition) {
 }
 
 func extractDefinition(file string, needle string) (string, error) {
-	regDef := regexp.MustCompile("(?s)\n" + needle + ": {.+")
+	regDef := regexp.MustCompile("(?s)\n" + needle + ": .+")
 	def := regDef.FindString(file)
 	for i, _ := range def {
 		if i > len(def)-1 {
