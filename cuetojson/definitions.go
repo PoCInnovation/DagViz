@@ -6,10 +6,15 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 )
 
-func LinkDefinitions(infos []CueInfos, root *dag.Root) {
-	definitionsNode := root.AttachNode("definitions")
+func LinkDefinitions(infos []CueInfos, root *CueRoot) {
+	definitionsNode := root.AttachNode(NodeDefinition{
+		name: "definitions",
+		file: "",
+		def:  "",
+	})
 
 	for _, program := range infos {
 		for _, file := range program.Files {
@@ -22,7 +27,10 @@ func LinkDefinitions(infos []CueInfos, root *dag.Root) {
 			deps := program.getDependencies()
 			deps = append(deps, file)
 			definitions := parseDefinitions(string(content))
+
+			fmt.Println("def of: ", definitionsNode.Value.(NodeDefinition).name)
 			addDefinitionsToDag(definitions, deps, program.Root, definitionsNode)
+			time.Sleep(time.Millisecond * 1000)
 		}
 	}
 }
@@ -33,22 +41,35 @@ type NodeDefinition struct {
 	def  string
 }
 
+func getDefinitions(node *dag.Node, buildFiles []string, root string, definition string) {
+	defNode := &dag.Node{}
+
+	node.LinksTo(defNode)
+
+	data, err := findDefinition(buildFiles, definition)
+	if err != nil {
+		return
+	}
+
+	defNode.Value = NodeDefinition{
+		name: definition,
+		file: strings.Replace(data.file, root, "", -1),
+		def:  "definition",
+	}
+	fmt.Println("def in: ", data.def)
+	addDefinitionsToDag(parseDefinitions(data.def), buildFiles, root, defNode)
+}
+
+var debug int
+
 func addDefinitionsToDag(definitions []string, buildFiles []string, root string, node *dag.Node) {
+	for _, def := range definitions {
+		fmt.Println("adding definition:", def)
+	}
+	fmt.Print("\n\n")
+
 	for _, definition := range definitions {
-		defNode := &dag.Node{}
-		node.LinksTo(defNode)
-
-		data, err := findDefinition(buildFiles, definition)
-		if err != nil {
-			continue
-		}
-
-		defNode.Value = NodeDefinition{
-			name: definition,
-			file: data.file,
-			def:  "definition",
-		}
-		go addDefinitionsToDag(parseDefinitions(data.def), buildFiles, root, defNode)
+		getDefinitions(node, buildFiles, root, definition)
 	}
 }
 
