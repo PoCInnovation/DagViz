@@ -3,6 +3,7 @@ package cuetojson
 import (
 	"dagviz/dag"
 	"fmt"
+	"golang.org/x/exp/slices"
 	"os"
 	"regexp"
 	"strings"
@@ -56,7 +57,12 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 			dependencies := program.getDependencies()
 			dependencies = append(dependencies, file)
 			buildFiles := sortDependencies(dependencies)
-			definitions := parseDefinitions(string(content))
+			p, err := getPackage(file)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			definitions := parseDefinitions(string(content), p)
 
 			fmt.Println("def of: ", definitionsNode.Value.(NodeDefinition).name)
 			addDefinitionsToDag(definitions, buildFiles, program.Root, definitionsNode)
@@ -87,7 +93,7 @@ func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string,
 		def:  "definition", //TODO: replace by data.def
 	}
 	fmt.Println("def: ", defNode.Value.(NodeDefinition))
-	addDefinitionsToDag(parseDefinitions(data.def), buildFiles, root, defNode)
+	addDefinitionsToDag(parseDefinitions(data.def, definition.pack), buildFiles, root, defNode)
 }
 
 func addDefinitionsToDag(definitions []DefinitionData, buildFiles map[string][]string, root string, node *dag.Node) {
@@ -106,15 +112,33 @@ type DefinitionData struct {
 	pack    string
 }
 
-func parseDefinitions(content string) []DefinitionData {
+func parseDefinitions(content string, pack string) []DefinitionData {
 	var definitions []DefinitionData
 
-	regex := regexp.MustCompile("([a-zA-Z]+)\\.(#[^ ,\n]+)")
+	fmt.Println("content: ", content)
+	fmt.Println("pack: ", pack)
+
+	regex := regexp.MustCompile("([a-zA-Z.]*)(#[^ ,\n]+)")
 	array := regex.FindAllStringSubmatch(content, -1)
 
+	for _, a := range array {
+		fmt.Println("a:", a)
+	}
 	for _, def := range array {
-		if !strings.HasSuffix(def[2], ":") {
-			definitions = append(definitions, DefinitionData{def[2], def[1]})
+		if len(def[1]) == 0 {
+			if !strings.HasSuffix(def[2], ":") {
+				fmt.Printf("def %s is in package %s\n", def[2], pack)
+				if slices.Contains(definitions, DefinitionData{def[2], pack}) {
+					continue
+				}
+				definitions = append(definitions, DefinitionData{def[2], pack})
+			}
+		} else {
+			fmt.Printf("def %s is in package %s\n", def[2], def[1][:len(def[1])-1])
+			if slices.Contains(definitions, DefinitionData{def[2], def[1][:len(def[1])-1]}) {
+				continue
+			}
+			definitions = append(definitions, DefinitionData{def[2], def[1][:len(def[1])-1]})
 		}
 	}
 
