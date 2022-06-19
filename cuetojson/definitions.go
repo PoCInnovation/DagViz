@@ -6,8 +6,37 @@ import (
 	"os"
 	"regexp"
 	"strings"
-	"time"
 )
+
+func getPackage(file string) (string, error) {
+	byteFile, err := os.ReadFile(file)
+	if err != nil {
+		return "", err
+	}
+	fileString := string(byteFile)
+	reg := regexp.MustCompile("package ([a-zA-Z0-9]+)")
+	p := reg.FindStringSubmatch(fileString)
+
+	return p[1], nil
+}
+
+func sortDependencies(dependencies []string) map[string][]string {
+	var sortedDependencies = make(map[string][]string)
+
+	for _, d := range dependencies {
+		pack, err := getPackage(d)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		fmt.Println("pack: ", pack, "d: ", d)
+		if _, ok := sortedDependencies[pack]; !ok {
+			sortedDependencies[pack] = []string{}
+		}
+		sortedDependencies[pack] = append(sortedDependencies[pack], d)
+	}
+	return sortedDependencies
+}
 
 func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 	definitionsNode := root.AttachNode(NodeDefinition{
@@ -24,13 +53,13 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 				continue
 			}
 
-			deps := program.getDependencies()
-			deps = append(deps, file)
+			dependencies := program.getDependencies()
+			dependencies = append(dependencies, file)
+			buildFiles := sortDependencies(dependencies)
 			definitions := parseDefinitions(string(content))
 
 			fmt.Println("def of: ", definitionsNode.Value.(NodeDefinition).name)
-			addDefinitionsToDag(definitions, deps, program.Root, definitionsNode)
-			time.Sleep(time.Millisecond * 1000)
+			addDefinitionsToDag(definitions, buildFiles, program.Root, definitionsNode)
 		}
 	}
 }
@@ -41,28 +70,27 @@ type NodeDefinition struct {
 	def  string
 }
 
-func getDefinitions(node *dag.Node, buildFiles []string, root string, definition string) {
+func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string, definition DefinitionData) {
 	defNode := &dag.Node{}
 
 	node.LinksTo(defNode)
 
-	data, err := findDefinition(buildFiles, definition)
+	fmt.Println("this DEF:", definition.pack, definition.defName)
+	data, err := findDefinition(buildFiles[definition.pack], definition.defName)
 	if err != nil {
 		return
 	}
 
 	defNode.Value = NodeDefinition{
-		name: definition,
+		name: definition.defName,
 		file: strings.Replace(data.file, root, "", -1),
-		def:  "definition",
+		def:  "definition", //TODO: replace by data.def
 	}
-	fmt.Println("def in: ", data.def)
+	fmt.Println("def: ", defNode.Value.(NodeDefinition))
 	addDefinitionsToDag(parseDefinitions(data.def), buildFiles, root, defNode)
 }
 
-var debug int
-
-func addDefinitionsToDag(definitions []string, buildFiles []string, root string, node *dag.Node) {
+func addDefinitionsToDag(definitions []DefinitionData, buildFiles map[string][]string, root string, node *dag.Node) {
 	for _, def := range definitions {
 		fmt.Println("adding definition:", def)
 	}
@@ -73,15 +101,20 @@ func addDefinitionsToDag(definitions []string, buildFiles []string, root string,
 	}
 }
 
-func parseDefinitions(content string) []string {
-	var definitions []string
+type DefinitionData struct {
+	defName string
+	pack    string
+}
 
-	regex := regexp.MustCompile("#[^ ,\n]+")
-	array := regex.FindAllString(content, -1)
+func parseDefinitions(content string) []DefinitionData {
+	var definitions []DefinitionData
+
+	regex := regexp.MustCompile("([a-zA-Z]+)\\.(#[^ ,\n]+)")
+	array := regex.FindAllStringSubmatch(content, -1)
 
 	for _, def := range array {
-		if !strings.HasSuffix(def, ":") {
-			definitions = append(definitions, def)
+		if !strings.HasSuffix(def[2], ":") {
+			definitions = append(definitions, DefinitionData{def[2], def[1]})
 		}
 	}
 
@@ -119,7 +152,7 @@ func defineNeedle(file string, needle string) (bool, Definition) {
 func extractDefinition(file string, needle string) (string, error) {
 	regDef := regexp.MustCompile("(?s)\n" + needle + ": .+")
 	def := regDef.FindString(file)
-	for i, _ := range def {
+	for i := range def {
 		if i > len(def)-1 {
 			return "", fmt.Errorf("could not find definition for %s", needle)
 		}
