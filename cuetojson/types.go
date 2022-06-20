@@ -36,7 +36,7 @@ type CueRoot struct {
 	dag.Root
 }
 
-func (r *CueRoot) PrintCueDag(i interface{}) {
+func (r *CueRoot) PrintDag(i interface{}) {
 	fmt.Print("Root:", r.Name, "\n\n")
 	var ano func(f interface{}, indent int, m *dag.Node)
 

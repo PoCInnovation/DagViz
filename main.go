@@ -26,5 +26,5 @@ func main() {
 	root := cuetojson.CreateCueDag("dag")
 
 	cuetojson.LinkDefinitions(infos, &root)
-	root.PrintCueDag(" --> ")
+	root.PrintDag(" --> ")
 }

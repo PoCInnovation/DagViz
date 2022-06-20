@@ -90,7 +90,7 @@ func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string,
 	defNode.Value = NodeDefinition{
 		name: definition.defName,
 		file: strings.Replace(data.file, root, "", -1),
-		def:  "definition", //TODO: replace by data.def
+		def:  data.def,
 	}
 	fmt.Println("def: ", defNode.Value.(NodeDefinition))
 	addDefinitionsToDag(parseDefinitions(data.def, definition.pack), buildFiles, root, defNode)
@@ -168,7 +168,7 @@ func defineNeedle(file string, needle string) (bool, Definition) {
 			fmt.Println(err)
 			return false, Definition{}
 		}
-		return true, Definition{file, def}
+		return true, Definition{file, def + "}"}
 	}
 	return false, Definition{}
 }
