@@ -3,6 +3,8 @@ package cuetojson
 import (
 	"cuelang.org/go/cue/ast"
 	"cuelang.org/go/cue/build"
+	"os"
+	"regexp"
 )
 
 func ExtractInfos(programs []CueProgram) []CueInfos {
@@ -60,6 +62,18 @@ func extractBuildFiles(files []*build.File) []string {
 	}
 
 	return array
+}
+
+func getCueContent(file string) (string, error) {
+	regex := regexp.MustCompile("(?s)//.*?\\n|/\\\\*.*?\\\\*/")
+	content, err := os.ReadFile(file)
+
+	if err != nil {
+		return "", err
+	}
+
+	uncomment := regex.ReplaceAll(content, nil)
+	return string(uncomment), nil
 }
 
 func (infos CueInfos) getDependencies() []string {

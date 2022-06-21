@@ -18,7 +18,7 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 
 	for _, program := range infos {
 		for _, file := range program.Files {
-			content, err := os.ReadFile(file)
+			content, err := getCueContent(file)
 
 			if err != nil {
 				continue
