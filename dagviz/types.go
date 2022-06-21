@@ -1,4 +1,4 @@
-package cuetojson
+package dagviz
 
 import (
 	"cuelang.org/go/cue"
