@@ -5,32 +5,6 @@ import (
 	"cuelang.org/go/cue/build"
 )
 
-func extractFiles(files []*ast.File) []string {
-	var array []string
-
-	if files == nil {
-		return make([]string, 0)
-	}
-	for _, file := range files {
-		array = append(array, file.Filename)
-	}
-
-	return array
-}
-
-func extractBuildFiles(files []*build.File) []string {
-	var array []string
-
-	if files == nil {
-		return make([]string, 0)
-	}
-	for _, file := range files {
-		array = append(array, file.Filename)
-	}
-
-	return array
-}
-
 func ExtractInfos(programs []CueProgram) []CueInfos {
 	var infos []CueInfos
 
@@ -60,6 +34,32 @@ func ExtractInfos(programs []CueProgram) []CueInfos {
 		infos = append(infos, info)
 	}
 	return infos
+}
+
+func extractFiles(files []*ast.File) []string {
+	var array []string
+
+	if files == nil {
+		return make([]string, 0)
+	}
+	for _, file := range files {
+		array = append(array, file.Filename)
+	}
+
+	return array
+}
+
+func extractBuildFiles(files []*build.File) []string {
+	var array []string
+
+	if files == nil {
+		return make([]string, 0)
+	}
+	for _, file := range files {
+		array = append(array, file.Filename)
+	}
+
+	return array
 }
 
 func (infos CueInfos) getDependencies() []string {

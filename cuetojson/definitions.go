@@ -70,12 +70,6 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 	}
 }
 
-type NodeDefinition struct {
-	name string
-	file string
-	def  string
-}
-
 func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string, definition DefinitionData) {
 	defNode := &dag.Node{}
 

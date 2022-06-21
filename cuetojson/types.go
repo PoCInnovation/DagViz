@@ -32,6 +32,12 @@ type Definition struct {
 	def  string
 }
 
+type NodeDefinition struct {
+	name string
+	file string
+	def  string
+}
+
 type CueRoot struct {
 	dag.Root
 }
