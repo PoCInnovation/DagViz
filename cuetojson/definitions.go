@@ -9,36 +9,6 @@ import (
 	"strings"
 )
 
-func getPackage(file string) (string, error) {
-	byteFile, err := os.ReadFile(file)
-	if err != nil {
-		return "", err
-	}
-	fileString := string(byteFile)
-	reg := regexp.MustCompile("package ([a-zA-Z0-9]+)")
-	p := reg.FindStringSubmatch(fileString)
-
-	return p[1], nil
-}
-
-func sortDependencies(dependencies []string) map[string][]string {
-	var sortedDependencies = make(map[string][]string)
-
-	for _, d := range dependencies {
-		pack, err := getPackage(d)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		fmt.Println("pack: ", pack, "d: ", d)
-		if _, ok := sortedDependencies[pack]; !ok {
-			sortedDependencies[pack] = []string{}
-		}
-		sortedDependencies[pack] = append(sortedDependencies[pack], d)
-	}
-	return sortedDependencies
-}
-
 func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 	definitionsNode := root.AttachNode(NodeDefinition{
 		name: "definitions",
@@ -68,6 +38,36 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 			addDefinitionsToDag(definitions, buildFiles, program.Root, definitionsNode)
 		}
 	}
+}
+
+func getPackage(file string) (string, error) {
+	byteFile, err := os.ReadFile(file)
+	if err != nil {
+		return "", err
+	}
+	fileString := string(byteFile)
+	reg := regexp.MustCompile("package ([a-zA-Z0-9]+)")
+	p := reg.FindStringSubmatch(fileString)
+
+	return p[1], nil
+}
+
+func sortDependencies(dependencies []string) map[string][]string {
+	var sortedDependencies = make(map[string][]string)
+
+	for _, d := range dependencies {
+		pack, err := getPackage(d)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		fmt.Println("pack: ", pack, "d: ", d)
+		if _, ok := sortedDependencies[pack]; !ok {
+			sortedDependencies[pack] = []string{}
+		}
+		sortedDependencies[pack] = append(sortedDependencies[pack], d)
+	}
+	return sortedDependencies
 }
 
 func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string, definition DefinitionData) {
