@@ -40,3 +40,8 @@ type NodeDefinition struct {
 	file string
 	def  string
 }
+
+type DefinitionData struct {
+	defName string
+	pack    string
+}

@@ -34,7 +34,6 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 			}
 			definitions := parseDefinitions(string(content), p)
 
-			fmt.Println("def of: ", definitionsNode.Value.(NodeDefinition).name)
 			addDefinitionsToDag(definitions, buildFiles, program.Root, definitionsNode)
 		}
 	}
@@ -61,7 +60,6 @@ func sortDependencies(dependencies []string) map[string][]string {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println("pack: ", pack, "d: ", d)
 		if _, ok := sortedDependencies[pack]; !ok {
 			sortedDependencies[pack] = []string{}
 		}
@@ -75,7 +73,6 @@ func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string,
 
 	node.LinksTo(defNode)
 
-	fmt.Println("this DEF:", definition.pack, definition.defName)
 	data, err := findDefinition(buildFiles[definition.pack], definition.defName)
 	if err != nil {
 		return
@@ -86,49 +83,30 @@ func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string,
 		file: strings.Replace(data.file, root, "", -1),
 		def:  data.def,
 	}
-	fmt.Println("def: ", defNode.Value.(NodeDefinition))
 	addDefinitionsToDag(parseDefinitions(data.def, definition.pack), buildFiles, root, defNode)
 }
 
 func addDefinitionsToDag(definitions []DefinitionData, buildFiles map[string][]string, root string, node *dag.Node) {
-	for _, def := range definitions {
-		fmt.Println("adding definition:", def)
-	}
-	fmt.Print("\n\n")
-
 	for _, definition := range definitions {
 		getDefinitions(node, buildFiles, root, definition)
 	}
 }
 
-type DefinitionData struct {
-	defName string
-	pack    string
-}
-
 func parseDefinitions(content string, pack string) []DefinitionData {
 	var definitions []DefinitionData
-
-	fmt.Println("content: ", content)
-	fmt.Println("pack: ", pack)
 
 	regex := regexp.MustCompile("([a-zA-Z.]*)(#[^ ,\n]+)")
 	array := regex.FindAllStringSubmatch(content, -1)
 
-	for _, a := range array {
-		fmt.Println("a:", a)
-	}
 	for _, def := range array {
 		if len(def[1]) == 0 {
 			if !strings.HasSuffix(def[2], ":") {
-				fmt.Printf("def %s is in package %s\n", def[2], pack)
 				if slices.Contains(definitions, DefinitionData{def[2], pack}) {
 					continue
 				}
 				definitions = append(definitions, DefinitionData{def[2], pack})
 			}
 		} else {
-			fmt.Printf("def %s is in package %s\n", def[2], def[1][:len(def[1])-1])
 			if slices.Contains(definitions, DefinitionData{def[2], def[1][:len(def[1])-1]}) {
 				continue
 			}
