@@ -1,4 +1,4 @@
-package dagviz
+package cueToDag
 
 import (
 	"fmt"

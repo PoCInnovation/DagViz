@@ -6,6 +6,7 @@ The objective of this project is to display any infos about Go program using dag
 
 Thanks to CueAPI we can retrieve any infos about our program and we create a dag using
 these infos.
+
 ## Getting Started
 
 ### Installation
@@ -24,13 +25,18 @@ cd DagViz
 To run the tests :
 
 ```
-go test ./test -v -race
+go test -v -race
 ```
 
 ### Usage
 
 ```
-go run . [$path_to_cue_program]
+go run . [$path_to_cue_directory]
+
+or
+
+go build
+./dagviz [$path_to_cue_directory]
 ```
 
 ## Get involved

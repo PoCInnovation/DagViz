@@ -1,4 +1,4 @@
-package dagviz
+package cueToDag
 
 import (
 	"dagviz/dag"
@@ -8,15 +8,6 @@ import (
 func CreateCueDag(name string) CueRoot {
 	return CueRoot{
 		Root: dag.Root{Name: name},
-	}
-}
-
-func (r *CueRoot) PrintDag(i interface{}) {
-	fmt.Print("Root:", r.Name, "\n\n")
-
-	for _, m := range r.Members {
-		printNode(i, 0, m)
-		fmt.Println("")
 	}
 }
 
@@ -30,5 +21,14 @@ func printNode(f interface{}, indent int, m *dag.Node) {
 	}
 	for _, link := range m.Links {
 		printNode(f, indent+1, link)
+	}
+}
+
+func (r *CueRoot) PrintDag(i interface{}) {
+	fmt.Print("Root:", r.Name, "\n\n")
+
+	for _, m := range r.Members {
+		printNode(i, 0, m)
+		fmt.Println("")
 	}
 }
