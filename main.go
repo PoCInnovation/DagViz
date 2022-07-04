@@ -3,20 +3,34 @@ package main
 import (
 	"cuelang.org/go/cue/cuecontext"
 	"dagviz/cueToDag"
+	"flag"
 	"fmt"
 	"os"
 )
 
+var (
+	jsonOutput bool
+	CueDir     string
+)
+
+func init() {
+	flag.BoolVar(&jsonOutput, "j", false, "Prints the DAG in JSON format")
+	flag.StringVar(&CueDir, "c", "", "The directory where the CUE files are located")
+	flag.Parse()
+}
+
 func main() {
-	args := os.Args
 	context := cuecontext.New()
 
-	if len(args) != 2 {
+	fmt.Println(jsonOutput)
+	fmt.Println(CueDir)
+
+	if len(CueDir) <= 0 {
 		fmt.Println("Error: A CUE file is required")
 		os.Exit(1)
 	}
 
-	programs, err := cueToDag.LoadFile(context, args[1], nil)
+	programs, err := cueToDag.LoadFile(context, CueDir, nil)
 
 	if err != nil {
 		return
@@ -26,5 +40,10 @@ func main() {
 	root := cueToDag.CreateCueDag("dag")
 
 	cueToDag.LinkDefinitions(infos, &root)
-	root.PrintDag(" --> ")
+
+	if jsonOutput == true {
+		cueToDag.PrintJson(root.Members[0].Links)
+	} else {
+		root.PrintDag("-->")
+	}
 }

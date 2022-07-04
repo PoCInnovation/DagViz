@@ -32,3 +32,25 @@ func (r *CueRoot) PrintDag(i interface{}) {
 		fmt.Println("")
 	}
 }
+
+func fmtPrintCueJson(d NodeDefinition, links []*dag.Node) {
+	fmt.Printf("{\"name\":\"%s\", \"file\":\"%s\", \"def\":\"%s\", \"dependencies\": ", d.name, d.file, "def")
+	PrintJson(links)
+	fmt.Print("}")
+}
+
+func PrintJson(members []*dag.Node) {
+	fmt.Print("[")
+
+	for index, m := range members {
+		if m.Value != nil {
+			if index != 0 {
+				print(",")
+			}
+			v := m.Value.(NodeDefinition)
+			fmtPrintCueJson(v, m.Links)
+		}
+
+	}
+	fmt.Print("]")
+}
