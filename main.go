@@ -22,9 +22,6 @@ func init() {
 func main() {
 	context := cuecontext.New()
 
-	fmt.Println(jsonOutput)
-	fmt.Println(CueDir)
-
 	if len(CueDir) <= 0 {
 		fmt.Println("Error: A CUE file is required")
 		os.Exit(1)
