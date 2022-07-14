@@ -1,4 +1,12 @@
-.idea/
+# development
+
+/.idea
+/.vscode
+/dagger
+/foo
+
+# build files
+
 cuetojson
 !cuetojson/
-.vscode/
+test.json
