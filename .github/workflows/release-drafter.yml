@@ -25,14 +25,3 @@ jobs:
         #   disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  run_test:
-    name: "Run tests"
-    runs-on: ubuntu-latest
-    container:
-      image: golang:1.18-alpine
-    steps:
-      - uses: actions/checkout@v2
-      - id: run_tests
-      - run: go test -v ./...
-      - timeout-minutes: 2
