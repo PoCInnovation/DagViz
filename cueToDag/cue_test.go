@@ -59,7 +59,7 @@ func TestDefinitions(t *testing.T) {
 	definition := NodeDefinition{
 		name: "#Info",
 		file: "/cue.mod/pkg/test.fr/info/info.cue",
-		def:  "\n#Info: {\n   name: \"info\"\n   description: \"program information\"\n   version: 2\n}",
+		def:  "#Info: {\n   name: \"info\"\n   description: \"program information\"\n   version: 2\n}",
 	}
 	assert.Equal(t, link.Value, definition, "Definition is different")
 }

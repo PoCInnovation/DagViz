@@ -97,7 +97,7 @@ func getDefinitions(node *dag.Node, buildFiles map[string][]string, root string,
 	defNode.Value = NodeDefinition{
 		name: definition.defName,
 		file: strings.Replace(data.file, root, "", -1),
-		def:  data.def,
+		def:  data.def[1:],
 	}
 	addDefinitionsToDag(parseDefinitions(data.def, definition.pack), buildFiles, root, defNode)
 }
