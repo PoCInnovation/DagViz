@@ -1,14 +1,16 @@
-name: tests
+name: Unit tests
 
 on:
   push:
+
 jobs:
-  run_test:
+  unit_tests:
     name: "Run tests"
     runs-on: ubuntu-latest
-    container: golang
+    container: golang:1.18-alpine
     steps:
-      - uses: actions/checkout@v2
-      - id: run_tests
-      - run: go test -v ./...
-      - timeout-minutes: 2
+      - name: Repository checkout
+        uses: actions/checkout@v2
+      - name: Unit tests
+        run: go test -v ./...
+        timeout-minutes: 2
