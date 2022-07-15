@@ -1,9 +1,20 @@
 const path = require('path');
 
-const { app, BrowserWindow } = require('electron');
-const isDev = require('electron-is-dev');
+const {app, BrowserWindow} = require('electron');
+const isDev = false;
+
+const exec = require('child_process').exec;
+//const cueDir = process.argv[2]
+const cueDir = app.commandLine.getSwitchValue('cueDir');
 
 function createWindow() {
+    exec(`/usr/local/lib/DagViz/go/dagviz -c ${cueDir} -j=true > ./src/data/data.json`, (err, stdout, stderr) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log(stdout);
+    });
     // Create the browser window.
     const win = new BrowserWindow({
         width: 800,
@@ -16,13 +27,11 @@ function createWindow() {
     // and load the index.html of the app.
     // win.loadFile("index.html");
     win.loadURL(
-        isDev
-            ? 'http://localhost:3000'
-            : `file://${path.join(__dirname, '../build/index.html')}`
+        'http://localhost:3000'
     );
     // Open the DevTools.
     if (isDev) {
-        win.webContents.openDevTools({ mode: 'detach' });
+        win.webContents.openDevTools({mode: 'detach'});
     }
 }
 

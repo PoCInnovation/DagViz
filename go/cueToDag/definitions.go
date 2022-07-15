@@ -1,7 +1,7 @@
 package cueToDag
 
 import (
-	"dagviz/go/dag"
+	"dagviz/dag"
 	"fmt"
 	"golang.org/x/exp/slices"
 	"os"

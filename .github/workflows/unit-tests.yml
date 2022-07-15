@@ -14,5 +14,5 @@ jobs:
       - name: Install dependencies
         run: apk add build-base ; go install
       - name: Unit tests
-        run: go test -v ./...
+        run: go test -v ./go/...
         timeout-minutes: 2
