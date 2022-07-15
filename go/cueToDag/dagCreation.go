@@ -1,7 +1,7 @@
 package cueToDag
 
 import (
-	"dagviz/dag"
+	"dagviz/go/dag"
 	"fmt"
 )
 

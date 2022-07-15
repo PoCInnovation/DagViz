@@ -1,17 +1,17 @@
 package cueToDag
 
 import (
-	"dagviz/dag"
+	dag2 "dagviz/go/dag"
 	"fmt"
 )
 
 func CreateCueDag(name string) CueRoot {
 	return CueRoot{
-		Root: dag.Root{Name: name},
+		Root: dag2.Root{Name: name},
 	}
 }
 
-func printNode(f interface{}, indent int, m *dag.Node) {
+func printNode(f interface{}, indent int, m *dag2.Node) {
 	if m.Value != nil {
 		for i := 0; i < indent; i++ {
 			fmt.Printf("%s", f)
@@ -33,13 +33,13 @@ func (r *CueRoot) PrintDag(i interface{}) {
 	}
 }
 
-func fmtPrintCueJson(d NodeDefinition, links []*dag.Node) {
+func fmtPrintCueJson(d NodeDefinition, links []*dag2.Node) {
 	fmt.Printf("{\"name\":\"%s\", \"file\":\"%s\", \"def\":\"%s\", \"dependencies\": ", d.name, d.file, "def")
 	PrintJson(links)
 	fmt.Print("}")
 }
 
-func PrintJson(members []*dag.Node) {
+func PrintJson(members []*dag2.Node) {
 	fmt.Print("[")
 
 	for index, m := range members {

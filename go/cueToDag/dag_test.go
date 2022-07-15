@@ -2,7 +2,7 @@ package cueToDag
 
 import (
 	"cuelang.org/go/cue/cuecontext"
-	"dagviz/dag"
+	"dagviz/go/dag"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
