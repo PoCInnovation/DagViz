@@ -1,7 +1,11 @@
 #!/bin/bash
-CUEDIR=$1
+PATHTOREPO="/home/isma/Developement/Go/DagViz/electron"
+ARG=$1
 
-if [ -z "$CUEDIR" ]; then
-    echo "Usage: dagviz.sh <cue_dir>"
-    exit 1
+if [ -z "$ARG" ]; then
+  ARG=$PWD
 fi
+
+# check the if the directory exists
+
+cd $PATHTOREPO || exit; CUEDIR="-cueDir=\"$ARG\"" npm run dev; cd - || exit;

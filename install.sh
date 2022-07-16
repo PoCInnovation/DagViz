@@ -1,14 +1,9 @@
 #!/bin/bash
-sudo mkdir /usr/local/lib/DagViz
 
-echo "Copying files to /usr/local/lib/DagViz"
+sudo rm -f "/usr/local/bin/dagviz"
 
-sudo cp -r ./electron/ /usr/local/lib/DagViz/
+echo "#!/bin/bash" > dagviz.sh
+echo "PATHTOREPO=\"$PWD/electron\"" >> dagviz.sh
+echo "cd \$PATHTOREPO || echo \"can't find the location\"; npm run dev; cd -" >> dagviz.sh
 
-echo "building electron"
-
-cd /usr/local/lib/DagViz/electron || exit; npm install; npm run build; cd - || exit
-
-echo "building go"
-
-go build -o /usr/local/lib/DagViz/dagviz
+sudo ln -s "$PWD/dagviz.sh" "/usr/local/bin/dagviz"

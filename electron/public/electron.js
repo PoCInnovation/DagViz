@@ -4,13 +4,12 @@ const {app, BrowserWindow} = require('electron');
 const isDev = false;
 
 const exec = require('child_process').exec;
-//const cueDir = process.argv[2]
 const cueDir = app.commandLine.getSwitchValue('cueDir');
 
 function createWindow() {
-    exec(`/usr/local/lib/DagViz/go/dagviz -c ${cueDir} -j=true > ./src/data/data.json`, (err, stdout, stderr) => {
+    exec(`../go/dagviz -c ${cueDir} -j=true > ./src/data/data.json`, (err, stdout, stderr) => {
         if (err) {
-            console.log(err);
+            console.log(stdout);
             return;
         }
         console.log(stdout);

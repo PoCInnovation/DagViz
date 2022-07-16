@@ -1,2 +1,1 @@
-Error: Cannot load -j=true
-cannot find package "."
+[{"name":"#Info", "file":"/cue.mod/pkg/test.fr/info/info.cue", "def":"def", "dependencies": []}]

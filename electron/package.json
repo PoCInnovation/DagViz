@@ -18,8 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently -k \"BROWSER=none serve -s build\" \"npm:electron\"",
-    "electron": "wait-on tcp:3000 && electron ."
+    "dev": "concurrently -k \"BROWSER=none npm start\" \"wait-on tcp:3000 && electron . $CUEDIR\"",
+    "electron": ""
   },
   "eslintConfig": {
     "extends": [
