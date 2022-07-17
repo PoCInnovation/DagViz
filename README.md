@@ -19,24 +19,20 @@ You needed to install [Go](https://go.dev/doc/install).
 # Get the project
 git clone git@github.com:PoCInnovation/DagViz.git
 cd DagViz
+./install.sh
 ```
 ### Quickstart
 
 To run the tests :
 
 ```
-go test -v -race
+go test -v -race ./...
 ```
 
 ### Usage
 
 ```
-go run . [$path_to_cue_directory]
-
-or
-
-go build
-./dagviz [$path_to_cue_directory]
+dagviz [$path_to_cue_package]
 ```
 
 ## Get involved

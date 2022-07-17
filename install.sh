@@ -2,6 +2,8 @@
 
 sudo rm -f "/usr/local/bin/dagviz"
 
+cd electron || exit; npm install; cd - || exit;
+
 echo "#!/bin/bash" > dagviz.sh
 echo "PATHTOREPO=\"$PWD/electron\"" >> dagviz.sh
 echo "ARG=\$1" >> dagviz.sh
