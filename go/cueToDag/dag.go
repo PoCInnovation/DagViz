@@ -53,7 +53,7 @@ func PrintJson(members []*dag.Node) {
 	for index, m := range members {
 		if m.Value != nil {
 			if index != 0 {
-				print(",")
+				fmt.Print(",")
 			}
 			v := m.Value.(NodeDefinition)
 			fmtPrintCueJson(v, m.Links)
