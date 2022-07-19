@@ -3,6 +3,7 @@ package cueToDag
 import (
 	"dagviz/dag"
 	"fmt"
+	"strings"
 )
 
 func CreateCueDag(name string) CueRoot {
@@ -33,8 +34,15 @@ func (r *CueRoot) PrintDag(i interface{}) {
 	}
 }
 
+func formatDef(s string) string {
+	s = strings.Replace(s, "\"", "\\\"", -1)
+	s = strings.Replace(s, "\n", "\\n", -1)
+	s = strings.Replace(s, "\t", "\\t", -1)
+	return s
+}
+
 func fmtPrintCueJson(d NodeDefinition, links []*dag.Node) {
-	fmt.Printf("{\"name\":\"%s\", \"file\":\"%s\", \"def\":\"%s\", \"dependencies\": ", d.name, d.file, "def")
+	fmt.Printf("{\"name\":\"%s\", \"file\":\"%s\", \"def\":\"%s\", \"dependencies\": ", d.name, d.file, formatDef(d.def))
 	PrintJson(links)
 	fmt.Print("}")
 }
