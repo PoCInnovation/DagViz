@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import mermaidAPI from "mermaid";
+import MermaidReact from 'mermaid-react';
 
 interface MermaidProps {
     chart: string;
@@ -9,27 +10,17 @@ mermaidAPI.initialize({
     startOnLoad: false,
 });
 
-const chart: string = `graph TD
-        A[Client] --> B[Load Balancer]
-        B --> C[Server01]
-        B --> D[Server02]`
+const t = `
+graph LR;
+A-->B;
+B-->C;
+B-->D[plop lanflz eknlzeknfz];
+`
 
 export default function Mermaid(props: MermaidProps): JSX.Element {
-    useEffect(() => {
-        mermaidAPI.initialize({
-            maxTextSize: 1000000,
-            startOnLoad: false,
-            flowchart: {
-                useMaxWidth: true,
-                curve: 'cardinal',
-            },
-        })
-        mermaidAPI.render('mermaid', props.chart, () => {
-
-        });
-    }, [])
-
-    return <div className="mermaid">
-        {chart}
-    </div>
+    return <MermaidReact
+        id='test'
+        mmd={t}
+        onClick={() => console.log('test Click')}
+        onRender={svg => console.log('render content', svg)} />
 }
