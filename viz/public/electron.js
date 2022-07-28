@@ -7,7 +7,7 @@ const exec = require('child_process').exec;
 const cueDir = app.commandLine.getSwitchValue('cueDir');
 
 function createWindow() {
-    exec(`../go/dagviz -c ${cueDir} -j=true > ./src/data/data.json`, (err, stdout, stderr) => {
+    exec(`../go/dagviz -c ${cueDir} -json=true > ./src/data/data.json`, (err, stdout, stderr) => {
         if (err) {
             console.log(stdout);
             return;

@@ -14,7 +14,7 @@ var (
 )
 
 func init() {
-	flag.BoolVar(&jsonOutput, "j", false, "Prints the DAG in JSON format")
+	flag.BoolVar(&jsonOutput, "json", false, "Prints the DAG in JSON format")
 	flag.StringVar(&CueDir, "c", "", "The directory where the CUE files are located")
 	flag.Parse()
 }
@@ -39,7 +39,9 @@ func main() {
 	cueToDag.LinkDefinitions(infos, &root)
 
 	if jsonOutput == true {
+		fmt.Printf("{\"file\": \"%s\",\"dag\":", CueDir)
 		cueToDag.PrintJson(root.Members[0].Links)
+		fmt.Printf("}")
 	} else {
 		root.PrintDag("-->")
 	}
