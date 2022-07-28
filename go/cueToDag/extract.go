@@ -65,7 +65,7 @@ func extractBuildFiles(files []*build.File) []string {
 }
 
 func getCueContent(file string) (string, error) {
-	regex := regexp.MustCompile("(?s)//.*?\\n|/\\\\*.*?\\\\*/")
+	regex := regexp.MustCompile("(?s)//.*?\n|/\\\\*.*?\\\\*/")
 	content, err := os.ReadFile(file)
 
 	if err != nil {

@@ -20,9 +20,7 @@ func (n *Node) GetValue(f interface{}, indent int) {
 }
 
 func (n *Node) LinksTo(node ...*Node) {
-	for _, l := range node {
-		n.Links = append(n.Links, l)
-	}
+	n.Links = append(n.Links, node...)
 }
 
 func (n *Node) BothLinksTo(node ...*Node) {

@@ -38,7 +38,7 @@ func main() {
 
 	cueToDag.LinkDefinitions(infos, &root)
 
-	if jsonOutput == true {
+	if jsonOutput {
 		fmt.Printf("{\"file\": \"%s\",\"dag\":", CueDir)
 		cueToDag.PrintJson(root.Members[0].Links)
 		fmt.Printf("}")
