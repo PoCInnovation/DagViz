@@ -1,6 +1,7 @@
 import React from 'react';
 import content from './data/data.json';
-import DagVizualizer from "./components/DagVizualizer";
+import DagVizualizer from "./components/dag/DagVizualizer";
+import TopBar from "./components/ui/TopBar";
 
 export type DagDefinition = {
   name: string,
@@ -12,9 +13,8 @@ export type DagDefinition = {
 function App() {
   return (
     <div>
-      {/*JSON.stringify(content)*/}
-      <DagVizualizer data={content}>
-      </DagVizualizer>
+      <TopBar path="temporary.cue" />
+      <DagVizualizer data={content} />
     </div>
   );
 }
