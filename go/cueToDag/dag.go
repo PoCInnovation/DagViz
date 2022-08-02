@@ -35,10 +35,10 @@ func (r *CueRoot) PrintDag(i interface{}) {
 }
 
 func formatDef(s string) string {
+	s = strings.Replace(s, "\\", "\\\\", -1)
 	s = strings.Replace(s, "\"", "\\\"", -1)
 	s = strings.Replace(s, "\n", "\\n", -1)
 	s = strings.Replace(s, "\t", "\\t", -1)
-	s = strings.Replace(s, "\\", "\\\\", -1)
 	return s
 }
 
