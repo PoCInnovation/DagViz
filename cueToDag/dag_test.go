@@ -13,7 +13,6 @@ func TestCreateCueDag(t *testing.T) {
 	CueDir := "../tests/package_test"
 	context := cuecontext.New()
 	programs, err := LoadFile(context, CueDir, nil)
-
 	if err != nil {
 		return
 	}
