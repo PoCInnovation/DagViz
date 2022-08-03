@@ -51,7 +51,6 @@ func PrintJson(members []*dag.Node) {
 			v := m.Value.(NodeDefinition)
 			fmtPrintCueJson(v, m.Links)
 		}
-
 	}
 	fmt.Print("]")
 }

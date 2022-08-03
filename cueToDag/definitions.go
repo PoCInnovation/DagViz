@@ -37,7 +37,6 @@ func parseDefinitions(content string, pack string) []DefinitionData {
 
 func defineNeedle(file string, needle string) (bool, Definition) {
 	byteFile, err := os.ReadFile(file)
-
 	if err != nil {
 		fmt.Println(err)
 		return false, Definition{}
