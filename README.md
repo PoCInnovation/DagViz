@@ -15,7 +15,7 @@ You needed to install [Go](https://go.dev/doc/install).
 
 
 #### Install DagViz
-```
+```sh
 # Get the project
 git clone git@github.com:PoCInnovation/DagViz.git
 cd DagViz
@@ -24,13 +24,13 @@ cd DagViz
 
 To run the tests :
 
-```
+```sh
 go test -v -race
 ```
 
 ### Usage
 
-```
+```sh
 go run . [$path_to_cue_directory]
 
 or
@@ -41,7 +41,7 @@ go build
 
 ## Get involved
 
-You're invited to join this project ! Check out the [contributing guide](./CONTRIBUTING.md).
+You're invited to join this project! Check out the [contributing guide](./CONTRIBUTING.md).
 
 If you're interested in how the project is organized at a higher level, please contact the current project manager.
 
