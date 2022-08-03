@@ -1,10 +1,12 @@
 package cueToDag
 
 import (
-	"cuelang.org/go/cue/cuecontext"
-	"dagviz/dag"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/PoCInnovation/DagViz/dag"
+
+	"cuelang.org/go/cue/cuecontext"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateCueDag(t *testing.T) {

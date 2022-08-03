@@ -3,7 +3,7 @@ package cueToDag
 import (
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/build"
-	"dagviz/dag"
+	"github.com/PoCInnovation/DagViz/dag"
 )
 
 type CueProgram struct {
