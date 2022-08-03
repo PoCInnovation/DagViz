@@ -1,10 +1,11 @@
 package cueToDag
 
 import (
-	"cuelang.org/go/cue/ast"
-	"cuelang.org/go/cue/build"
 	"os"
 	"regexp"
+
+	"cuelang.org/go/cue/ast"
+	"cuelang.org/go/cue/build"
 )
 
 func ExtractInfos(programs []CueProgram) []CueInfos {

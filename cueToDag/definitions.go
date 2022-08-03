@@ -1,12 +1,13 @@
 package cueToDag
 
 import (
-	"dagviz/dag"
 	"fmt"
-	"golang.org/x/exp/slices"
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/PoCInnovation/DagViz/dag"
+	"golang.org/x/exp/slices"
 )
 
 func parseDefinitions(content string, pack string) []DefinitionData {

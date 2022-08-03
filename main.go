@@ -1,11 +1,12 @@
 package main
 
 import (
-	"cuelang.org/go/cue/cuecontext"
-	"dagviz/cueToDag"
 	"flag"
 	"fmt"
 	"os"
+
+	"cuelang.org/go/cue/cuecontext"
+	"github.com/PoCInnovation/DagViz/cueToDag"
 )
 
 var (

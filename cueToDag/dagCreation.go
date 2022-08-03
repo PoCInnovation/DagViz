@@ -1,8 +1,9 @@
 package cueToDag
 
 import (
-	"dagviz/dag"
 	"fmt"
+
+	"github.com/PoCInnovation/DagViz/dag"
 )
 
 func LinkDefinitions(infos []CueInfos, root *CueRoot) {

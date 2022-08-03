@@ -1,4 +1,4 @@
-module dagviz
+module github.com/PoCInnovation/DagViz
 
 go 1.18
 

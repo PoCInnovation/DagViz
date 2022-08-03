@@ -1,12 +1,13 @@
 package cueToDag
 
 import (
-	"cuelang.org/go/cue"
-	"cuelang.org/go/cue/load"
 	"fmt"
 	"io/fs"
 	"path"
 	"path/filepath"
+
+	"cuelang.org/go/cue"
+	"cuelang.org/go/cue/load"
 )
 
 func LoadFile(context *cue.Context, p string, overlay map[string]fs.FS) ([]CueProgram, error) {
