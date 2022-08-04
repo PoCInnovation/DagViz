@@ -1,7 +1,7 @@
 import {DagDefinition, DagResults} from './types';
 
 export default function generateChart(dag: DagResults): string {
-    const style = "graph LR;"
+    const style = "class diagram; direction LR;"
     const fileNode = "PARENT[\"" + dag.file + "\"]"
     let count = 0;
 
@@ -10,7 +10,6 @@ export default function generateChart(dag: DagResults): string {
         return generateNode(node, fileNode, count);
     });
 
-    console.log(style + nodes.join(""))
     return style + nodes.join("");
 }
 
