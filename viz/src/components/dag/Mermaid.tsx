@@ -6,6 +6,7 @@ interface MermaidProps {
 }
 
 export default function Mermaid(props: MermaidProps): JSX.Element {
+    console.log(props.chart);
     return <MermaidReact
         id='test'
         mmd={props.chart}
