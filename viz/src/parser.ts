@@ -16,20 +16,21 @@ export default function generateChart(dag: DagResults): string {
     let count = 0;
     function rec() : string[]{
         let table : string[] = []
-        function r(baseNode: DagDefinition, parentNode: string, count: number) {
+        let count: number = 0;
+        function r(baseNode: DagDefinition, parentNode: string) {
             const node = generateNode(baseNode, parentNode, count)
             let nombre: number = count
             table.push(node)
             baseNode.dependencies.map(n => {
                 count += 1
-                r(n,  nombre+ "[\"" + baseNode.name + "\"]", count)
+                r(n,  nombre+ "[\"" + baseNode.name + "\"]")
             })
         }
 
         dag.dag.map(n => {
             console.log("hello\n")
             count += 1
-            r(n, fileNode, count);
+            r(n, fileNode);
         })
         return table
     }
