@@ -13,7 +13,6 @@ export default function generateChart(dag: DagResults): string {
     const fileNode = "PARENT[\"" + dag.file + "\"]"
     let stack = "graph LR;"
 
-    let count = 0;
     function rec() : string[]{
         let table : string[] = []
         let count: number = 0;
