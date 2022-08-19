@@ -1,8 +1,9 @@
 package cueToDag
 
 import (
-	"dagviz/dag"
 	"fmt"
+
+	"github.com/PoCInnovation/DagViz/dag"
 )
 
 func LinkDefinitions(infos []CueInfos, root *CueRoot) {
@@ -15,7 +16,6 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 	for _, program := range infos {
 		for _, file := range program.Files {
 			content, err := getCueContent(file)
-
 			if err != nil {
 				continue
 			}
@@ -24,7 +24,6 @@ func LinkDefinitions(infos []CueInfos, root *CueRoot) {
 			dependencies = append(dependencies, file)
 			buildFiles := sortDependencies(dependencies)
 			p, err := getPackage(file)
-
 			if err != nil {
 				fmt.Println(err)
 				continue

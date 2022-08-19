@@ -1,10 +1,11 @@
 package cueToDag
 
 import (
-	"cuelang.org/go/cue/ast"
-	"cuelang.org/go/cue/build"
 	"os"
 	"regexp"
+
+	"cuelang.org/go/cue/ast"
+	"cuelang.org/go/cue/build"
 )
 
 func ExtractInfos(programs []CueProgram) []CueInfos {
@@ -67,7 +68,6 @@ func extractBuildFiles(files []*build.File) []string {
 func getCueContent(file string) (string, error) {
 	regex := regexp.MustCompile("(?s)//.*?\n|/\\\\*.*?\\\\*/")
 	content, err := os.ReadFile(file)
-
 	if err != nil {
 		return "", err
 	}

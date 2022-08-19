@@ -1,11 +1,12 @@
 package main
 
 import (
-	"cuelang.org/go/cue/cuecontext"
-	"dagviz/cueToDag"
 	"flag"
 	"fmt"
 	"os"
+
+	"cuelang.org/go/cue/cuecontext"
+	"github.com/PoCInnovation/DagViz/cueToDag"
 )
 
 var (
@@ -20,17 +21,23 @@ func init() {
 }
 
 func main() {
+	err := run()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
 	context := cuecontext.New()
 
 	if len(CueDir) <= 0 {
-		fmt.Println("Error: A CUE file is required")
-		os.Exit(1)
+		return fmt.Errorf("a CUE file is required")
 	}
 
 	programs, err := cueToDag.LoadFile(context, CueDir, nil)
-
 	if err != nil {
-		return
+		return fmt.Errorf("load file error: %w", err)
 	}
 
 	infos := cueToDag.ExtractInfos(programs)
@@ -45,4 +52,6 @@ func main() {
 	} else {
 		root.PrintDag("-->")
 	}
+
+	return nil
 }

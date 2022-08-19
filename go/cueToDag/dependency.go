@@ -19,7 +19,7 @@ func getPackage(file string) (string, error) {
 }
 
 func sortDependencies(dependencies []string) map[string][]string {
-	var sortedDependencies = make(map[string][]string)
+	sortedDependencies := make(map[string][]string)
 
 	for _, d := range dependencies {
 		pack, err := getPackage(d)

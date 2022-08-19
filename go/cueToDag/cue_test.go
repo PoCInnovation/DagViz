@@ -1,10 +1,11 @@
 package cueToDag
 
 import (
-	"cuelang.org/go/cue/cuecontext"
-	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
+
+	"cuelang.org/go/cue/cuecontext"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateDag(t *testing.T) {
@@ -26,7 +27,6 @@ func TestNoDefinitions(t *testing.T) {
 	context := cuecontext.New()
 
 	programs, err := LoadFile(context, "../samples/no_def", nil)
-
 	if err != nil {
 		t.Fail()
 	}
@@ -43,7 +43,6 @@ func TestDefinitions(t *testing.T) {
 	context := cuecontext.New()
 
 	programs, err := LoadFile(context, "../samples/def", nil)
-
 	if err != nil {
 		t.Fail()
 	}
@@ -68,7 +67,6 @@ func TestCueInfos(t *testing.T) {
 	context := cuecontext.New()
 
 	programs, err := LoadFile(context, "../samples/infos", nil)
-
 	if err != nil {
 		t.Fail()
 	}

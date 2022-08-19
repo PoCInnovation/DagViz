@@ -1,9 +1,10 @@
 package cueToDag
 
 import (
-	"dagviz/dag"
 	"fmt"
 	"strings"
+
+	"github.com/PoCInnovation/DagViz/dag"
 )
 
 func CreateCueDag(name string) CueRoot {
@@ -59,7 +60,6 @@ func PrintJson(members []*dag.Node) {
 			v := m.Value.(NodeDefinition)
 			fmtPrintCueJson(v, m.Links)
 		}
-
 	}
 	fmt.Print("]")
 }
