@@ -5,11 +5,19 @@ interface MermaidProps {
     chart: string;
 }
 
+function callback() {
+    console.log('bonjour');
+}
+
 export default function Mermaid(props: MermaidProps): JSX.Element {
-    console.log(props.chart);
+    const a = "graph LR\n" +
+        "ABC(Datasource) -- Input --> B((System))\n" +
+        "B -- Output --> C(Datasink)\n" +
+        "click ABC callback"
+
     return <MermaidReact
         id='test'
-        mmd={props.chart}
+        mmd={a}
         onClick={() => console.log('test Click')}
         onRender={svg => console.log('render content', svg)}
     />
