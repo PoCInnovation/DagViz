@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import mermaid from "mermaid";
 import { MERMAID_CONFIG } from "./mermaidConfig";
 
-
 interface MermaidProps {
     chart: string
 }
@@ -12,7 +11,7 @@ export default function Mermaid(props: MermaidProps): JSX.Element {
 
     useEffect(() => {
         mermaid.contentLoaded()
-    }, [MERMAID_CONFIG])
+    }, [props.chart])
 
     return (
         <div className="mermaid">

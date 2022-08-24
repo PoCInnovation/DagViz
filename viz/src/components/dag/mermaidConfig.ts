@@ -3,7 +3,7 @@ export const MERMAID_CONFIG: any = {
 /*    theme: mermaidAPI.Theme.Base,
     logLevel: mermaidAPI.LogLevel.Info,
     securityLevel: mermaidAPI.SecurityLevel.Strict,*/
-    arrowMarkerAbsolute: false,
+    arrowMarkerAbsolute: true,
     flowchart: {
         htmlLabels: true,
         curve: "linear",
@@ -21,7 +21,7 @@ export const MERMAID_CONFIG: any = {
         mirrorActors: true,
         bottomMarginAdj: 1,
         useMaxWidth: true,
-        rightAngles: false,
+        rightAngles: true,
     },
     gantt: {
         titleTopMargin: 25,
