@@ -1,24 +1,22 @@
-import React from "react";
-import MermaidReact from 'mermaid-react';
+import React, {useEffect} from "react";
+import mermaid from "mermaid";
+import { MERMAID_CONFIG } from "./mermaidConfig";
+
 
 interface MermaidProps {
-    chart: string;
-}
-
-function callback() {
-    console.log('bonjour');
+    chart: string
 }
 
 export default function Mermaid(props: MermaidProps): JSX.Element {
-    const a = "graph LR\n" +
-        "ABC(Datasource) -- Input --> B((System))\n" +
-        "B -- Output --> C(Datasink)\n" +
-        "click ABC callback"
+    mermaid.initialize(MERMAID_CONFIG)
 
-    return <MermaidReact
-        id='test'
-        mmd={a}
-        onClick={() => console.log('test Click')}
-        onRender={svg => console.log('render content', svg)}
-    />
+    useEffect(() => {
+        mermaid.contentLoaded()
+    }, [MERMAID_CONFIG])
+
+    return (
+        <div className="mermaid">
+            {props.chart}
+        </div>
+    )
 }
