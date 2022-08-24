@@ -1,7 +1,7 @@
 import React from 'react';
 import Mermaid from "./Mermaid";
 import {DagResults} from "../../types";
-import generateChart from "../../parser";
+import {generateChart} from "../../parser";
 
 interface DagVizualizerProps {
     data: DagResults,

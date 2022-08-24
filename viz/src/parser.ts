@@ -1,6 +1,6 @@
-import { DagDefinition, DagResults } from './types';
+import {DagDefinition, DagResults} from './types';
 
-export default function generateChart(dag: DagResults): string {
+export function generateChart(dag: DagResults): string {
     const stack = "graph LR;"
     const fileNode = "PARENT[\"" + dag.file + "\"]"
     const table = generateTable(dag, fileNode)
@@ -27,7 +27,7 @@ function appendNodes(baseNode: DagDefinition, parentNode: string, table: string[
     table.push(node)
     baseNode.dependencies.forEach(n => {
         count += 1
-        count = appendNodes(n,  parent + "[\"" + baseNode.name + "\"]", table, count)
+        count = appendNodes(n, parent + "[\"" + baseNode.name + "\"]", table, count)
     })
     return count
 }
@@ -37,4 +37,33 @@ function generateNode(node: DagDefinition, parent: string, count: number): strin
     const style = count + "[\"" + node.name + "\"];\n"
 
     return link + style
+}
+
+type Leaf = {
+    name: string,
+    checked: 0 | 0.5 | 1
+    isOpen: boolean
+    children: Leaf[]
+}
+
+export function generateTree(dag: DagResults): any {
+    const tree: Leaf[] = []
+    dag.dag.forEach(n => {
+            tree.push(generateLeaf(n))
+        }
+    )
+    return tree
+}
+
+function generateLeaf(node: DagDefinition): Leaf {
+    const leaf: Leaf = {
+        name: node.name,
+        checked: 0,
+        isOpen: false,
+        children: []
+    }
+
+    node.dependencies.forEach(n => leaf.children.push(generateLeaf(n)))
+
+    return leaf
 }
