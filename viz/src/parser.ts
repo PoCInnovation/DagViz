@@ -39,11 +39,17 @@ function generateNode(node: DagDefinition, parent: string, count: number): strin
     return link + style
 }
 
+type metadata = {
+    def: string,
+    file: string,
+}
+
 type Leaf = {
     name: string,
     checked: 0 | 0.5 | 1
     isOpen: boolean
     children: Leaf[]
+    metadata: metadata
 }
 
 export function generateTree(dag: DagResults): any {
@@ -60,7 +66,11 @@ function generateLeaf(node: DagDefinition): Leaf {
         name: node.name,
         checked: 0,
         isOpen: false,
-        children: []
+        children: [],
+        metadata: {
+            def: node.def,
+            file: node.file
+        }
     }
 
     node.dependencies.forEach(n => leaf.children.push(generateLeaf(n)))

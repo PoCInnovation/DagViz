@@ -12,6 +12,7 @@ export default function Tree(props: DagTree): JSX.Element {
         name: 'root',
         isOpen: false,
         children: generateTree(props.data),
+        metadata: "hello world"
     }
     const treeState1 = {
         name: 'root [half checked and opened]',
@@ -35,6 +36,9 @@ export default function Tree(props: DagTree): JSX.Element {
             data={treeState}
             showCheckbox={ false }
             readOnly={ true }
+            onNameClick={ (node: any) => {
+                console.log(node)
+            } }
             //onChange={ onTreeStateChange }
         />
     );
