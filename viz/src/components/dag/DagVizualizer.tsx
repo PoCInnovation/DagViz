@@ -4,11 +4,11 @@ import {DagResults} from "../../types";
 import {generateChart} from "../../parser";
 
 interface DagVizualizerProps {
-    data: DagResults,
+    data: string,
 }
 
 export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
     return (
-        <Mermaid chart={generateChart(props.data)} />
+        <Mermaid chart={props.data} />
     )
 }

@@ -1,17 +1,16 @@
 // @ts-ignore
 import FolderTree from 'react-folder-tree';
-import {DagResults} from "../../types";
-import {generateTree} from "../../parser";
+import {Leaf} from "../../types";
 
 interface DagTree {
-    data: DagResults,
+    data: Leaf[],
 }
 
 export default function Tree(props: DagTree): JSX.Element {
     const treeState = {
         name: 'root',
-        isOpen: false,
-        children: generateTree(props.data),
+        isOpen: true,
+        children: props.data,
         metadata: "hello world"
     }
     const treeState1 = {
@@ -39,6 +38,7 @@ export default function Tree(props: DagTree): JSX.Element {
             onNameClick={ (node: any) => {
                 console.log(node)
             } }
+            initOpenStatus='custom'
             //onChange={ onTreeStateChange }
         />
     );
