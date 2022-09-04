@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import content from './data/data.json';
 import DagVizualizer from "./components/dag/DagVizualizer";
 import {DagResults, Leaf} from "./types";
@@ -12,12 +12,33 @@ const parsed = content as DagResults;
 const initialTree: Leaf[] = generateTree(parsed);
 
 function App() {
-    const { data, links } = generateChartInfo(initialTree);
+    const staticData = {
+        name: 'root',
+        isOpen: true,
+        checked: 0,
+        children: initialTree,
+        metadata: {
+            file: 'root',
+            def: 'salut'
+        }
+    }
+
+    const [treeState, setTreeState] = useState({
+        name: 'root',
+        isOpen: true,
+        checked: 0,
+        children: initialTree,
+        metadata: {
+            file: 'root',
+            def: 'salut'
+        }
+    });
 
     return (
         <>
             <TopBar path="temporary.cue"/>
-            <DagVizualizer file={content.file} data={data} links={links} />
+            <DagVizualizer file={content.file} flo={treeState}/>
+            <Tree data={staticData} change={setTreeState}/>
         </>
     );
 }

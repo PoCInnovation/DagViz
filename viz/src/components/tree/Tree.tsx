@@ -3,17 +3,13 @@ import FolderTree from 'react-folder-tree';
 import {Leaf} from "../../types";
 
 interface DagTree {
-    data: Leaf[],
+    data: Leaf,
+    change: (data: Leaf) => void
 }
 
 export default function Tree(props: DagTree): JSX.Element {
-    const treeState = {
-        name: 'root',
-        isOpen: true,
-        children: props.data,
-        metadata: "hello world"
-    }
-    const treeState1 = {
+
+    /*const treeState1 = {
         name: 'root [half checked and opened]',
         isOpen: false,   // this folder is opened, we can see it's children
         children: [
@@ -28,18 +24,21 @@ export default function Tree(props: DagTree): JSX.Element {
                 ],
             },
         ],
-    };
+    };*/
 
     return (
         <FolderTree
-            data={treeState}
+            data={props.data}
             showCheckbox={ false }
             readOnly={ true }
             onNameClick={ (node: any) => {
                 console.log(node)
             } }
             initOpenStatus='custom'
-            //onChange={ onTreeStateChange }
+            onChange={ (state: any, event: any) => {
+                    console.log(state, event)
+                    props.change(state)
+            } }
         />
     );
 }

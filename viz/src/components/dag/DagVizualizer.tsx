@@ -1,14 +1,17 @@
 import React from 'react';
 import EChartsReact from "echarts-for-react";
 import {Box} from "@mui/material";
+import {Runtime} from "inspector";
+import {Leaf} from "../../types";
+import {generateChartInfo} from "../../parser";
 
 interface DagVizualizerProps {
     file: string
-    data: any,
-    links: any,
+    flo: Leaf
 }
 
 export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
+    const {data, links } = generateChartInfo(props.flo.children);
     const options = {
         tooltip: [
             {
@@ -28,14 +31,15 @@ export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
             emphasis: {
                 disabled: false,
             },
-            data: props.data,
-            links: props.links,
+            data,
+            links,
         }
     };
 
+
     return (
-        <Box sx={{ border: 1, margin: 2 }}>
-            <EChartsReact option={options} />
+        <Box sx={{border: 1, margin: 2}}>
+            <EChartsReact option={options}/>
         </Box>
     );
 }

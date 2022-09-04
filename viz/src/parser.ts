@@ -38,8 +38,10 @@ export function generateChartInfo(nodes: Leaf[]): ChartInfos {
     const links: any[] = []
 
     nodes.forEach(v => {
-        recNodes(v, "root", data, links)
-        recursiveChart(v, data, links)
+        if (v.isOpen) {
+            recNodes(v, "root", data, links)
+            recursiveChart(v, data, links)
+        }
     })
 
     return { data, links }
