@@ -1,46 +1,8 @@
 import {DagDefinition, DagResults, Leaf} from './types';
 
-export function generateChart(dag: Leaf[]): string {
-    const stack = "graph LR;"
-    const fileNode = "PARENT[\"TEST\"]"
-    const table = generateTable(dag, fileNode)
-
-    return stack + table.join("")
-}
-
-function generateTable(dag: Leaf[], fileNode: string): string[] {
-    const table: string[] = []
-    let count: number = 0;
-
-    dag.forEach(n => {
-        count += 1
-        if (n.isOpen) {
-            count = appendNodes(n, fileNode, table, count)
-        }
-    })
-
-    return table
-}
-
-function appendNodes(baseNode: Leaf, parentNode: string, table: string[], count: number): number {
-    const node = generateNode(baseNode, parentNode, count)
-    const parent: number = count
-
-    table.push(node)
-    baseNode.children.forEach(n => {
-        count += 1
-        if (n.isOpen) {
-            count = appendNodes(n, parent + "[\"" + baseNode.name + "\"]", table, count)
-        }
-    })
-    return count
-}
-
-function generateNode(node: Leaf, parent: string, count: number): string {
-    const link = parent + "-->"
-    const style = count + "[\"" + node.name + "\"];\n"
-
-    return link + style
+interface ChartInfos {
+    data: any[],
+    links: any[],
 }
 
 export function generateTree(dag: DagResults): any {
@@ -67,3 +29,60 @@ function generateLeaf(node: DagDefinition): Leaf {
 
     return leaf
 }
+
+export function generateChartInfo(nodes: Leaf[]): ChartInfos {
+    const data: any[] = [{
+        name: "root",
+        value: "none",
+    }]
+    const links: any[] = []
+
+    nodes.forEach(v => {
+        recNodes(v, "root", data, links)
+        recursiveChart(v, data, links)
+    })
+
+    return { data, links }
+}
+
+function recursiveChart(node: Leaf, data: any[], links: any[]): any {
+    node.children.forEach(v => {
+        recNodes(v, node.name, data, links)
+    })
+}
+
+function recNodes(node: Leaf, parent: string, data: any[], links: any[]): any {
+    data.push({
+        name: node.name,
+        value: node.metadata.def + "|" + node.metadata.file
+    })
+    links.push({
+        source: parent,
+        target: node.name
+    })
+    recursiveChart(node, data, links)
+}
+
+/*
+ [
+                {
+                    name: "salut",
+                    value: 10,
+                    symbol: "circle",
+                },
+                {
+                    name: "salut2",
+                    value: 5,
+                    symbol: "circle",
+                }
+            ],
+ */
+
+/*
+: [
+                {
+                    source: "salut",
+                    target: "salut2",
+                }
+            ]
+ */
