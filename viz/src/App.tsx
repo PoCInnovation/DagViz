@@ -1,46 +1,35 @@
-import React, {useState} from 'react';
-import content from './data/data.json';
+import { useState } from "react";
 import DagVizualizer from "./components/dag/DagVizualizer";
-import {DagResults, Leaf} from "./types";
-import "./index.css";
-import {generateChartInfo, generateTree} from "./parser";
-import TopBar from "./components/ui/TopBar";
 import Tree from "./components/tree/Tree";
-import {Box} from "@mui/material";
+import TopBar from "./components/ui/TopBar";
+import content from "./data/data.json";
+import "./index.css";
+import { generateTree } from "./parser";
+import { DagResults, Leaf } from "./types";
 
 const parsed = content as DagResults;
 const initialTree: Leaf[] = generateTree(parsed);
+const staticData = {
+  name: "root",
+  isOpen: true,
+  checked: 0,
+  children: initialTree,
+  metadata: {
+    file: "root",
+    def: "salut",
+  },
+};
 
 function App() {
-    const staticData = {
-        name: 'root',
-        isOpen: true,
-        checked: 0,
-        children: initialTree,
-        metadata: {
-            file: 'root',
-            def: 'salut'
-        }
-    }
+  const [treeState, setTreeState] = useState(staticData);
 
-    const [treeState, setTreeState] = useState({
-        name: 'root',
-        isOpen: true,
-        checked: 0,
-        children: initialTree,
-        metadata: {
-            file: 'root',
-            def: 'salut'
-        }
-    });
-
-    return (
-        <>
-            <TopBar path="temporary.cue"/>
-            <DagVizualizer file={content.file} flo={treeState}/>
-            <Tree data={staticData} change={setTreeState}/>
-        </>
-    );
+  return (
+    <>
+      <TopBar path="temporary.cue" />
+      <DagVizualizer file={content.file} flo={treeState} />
+      <Tree data={staticData} onChange={setTreeState} />
+    </>
+  );
 }
 
 export default App;
