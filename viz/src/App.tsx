@@ -23,6 +23,7 @@ function App() {
     });
 
     return (
+        /*
         <div>
             <TopBar path="temporary.cue"/>
             <div style={{ display: "flex", flexDirection: "row"}}>
@@ -34,6 +35,8 @@ function App() {
                 </div>
             </div>
         </div>
+        */
+        <DagVizualizer file={content.file}/>
     );
 }
 
