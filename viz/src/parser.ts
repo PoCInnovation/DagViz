@@ -54,7 +54,7 @@ function recursiveChart(node: Leaf, data: any[], links: any[]): any {
 function recNodes(node: Leaf, parent: string, data: any[], links: any[]): any {
     data.push({
         name: node.name,
-        value: node.metadata.def + "|" + node.metadata.file
+        value: node.metadata
     })
     links.push({
         source: parent,

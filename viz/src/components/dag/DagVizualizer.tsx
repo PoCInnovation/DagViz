@@ -9,9 +9,17 @@ interface DagVizualizerProps {
 }
 
 export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
-    console.log(props.links)
-
     const options = {
+        tooltip: [
+            {
+                show: true,
+                showContent: true,
+                trigger: "item",
+                triggerOn: "mousemove",
+                displayMode: "single",
+                renderMode: "auto",
+            }
+        ],
         series: {
             type: "graph",
             id: "dagviz-graph",
