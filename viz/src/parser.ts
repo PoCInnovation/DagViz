@@ -1,9 +1,8 @@
-import {DagDefinition, DagResults, Leaf} from './types';
-import {getColor, initColors, rootColor} from "./colors";
+import {DagDefinition, DagResults, EchartsLink, EchartsNode, Leaf} from './types';
 
 interface ChartInfos {
-    data: any[],
-    links: any[],
+    data: EchartsNode[],
+    links: EchartsLink[],
 }
 
 export function generateChartInfo(nodes: Leaf[], fileName: string): ChartInfos {
@@ -28,7 +27,7 @@ export function generateChartInfo(nodes: Leaf[], fileName: string): ChartInfos {
     return {data, links}
 }
 
-export function generateTree(dag: DagResults): any {
+export function generateTree(dag: DagResults): Leaf[] {
     const tree: Leaf[] = []
     dag.dag.forEach(n => {
         tree.push(generateLeaf(n, 1, rootColor))
@@ -42,13 +41,17 @@ function generateLeaf(node: DagDefinition, depth: number, parentColor: string): 
         depth: depth,
         color: getColor(depth, parentColor),
         checked: 0,
-        isOpen: false,
-        children: [],
         metadata: {
             def: node.def,
             file: node.file
         }
     }
+
+    if (node.dependencies.length !== 0) {
+        leaf.children = []
+        leaf.isOpen = false
+    }
+
     node.dependencies.forEach(n => leaf.children.push(generateLeaf(n, depth + 1, leaf.color)))
 
     return leaf
