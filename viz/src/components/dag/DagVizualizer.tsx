@@ -5,11 +5,11 @@ import { Leaf } from "../../types";
 
 interface DagVizualizerProps {
   file: string;
-  flo: Leaf;
+  data: Leaf;
 }
 
 export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
-  const { data, links } = generateChartInfo(props.flo.children);
+  const { data, links } = generateChartInfo(props.data.children, props.file);
   const options = {
     tooltip: [
       {
@@ -33,10 +33,9 @@ export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
       links,
     },
   };
-  console.log(links)
 
   return (
-    <Box sx={{ border: 1, margin: 2 }}>
+    <Box sx={{ border: 1, margin: 1 }}>
       <EChartsReact option={options} />
     </Box>
   );

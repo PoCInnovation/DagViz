@@ -17,6 +17,8 @@ export type Metadata = {
 
 export type Leaf = {
     name: string
+    depth: number
+    color: string
     checked: number
     isOpen: boolean
     children: Leaf[]
