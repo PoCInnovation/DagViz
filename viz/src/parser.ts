@@ -18,7 +18,7 @@ function generateLeaf(node: DagDefinition): Leaf {
     const leaf: Leaf = {
         name: node.name,
         checked: 0,
-        isOpen: node.name === "#FS" ? true : node.name === "#WriteFile",
+        isOpen: false,
         children: [],
         metadata: {
             def: node.def,
@@ -32,8 +32,9 @@ function generateLeaf(node: DagDefinition): Leaf {
 
 export function generateChartInfo(nodes: Leaf[]): ChartInfos {
     const data: any[] = [{
-        name: "root1",
+        name: "root",
         value: "none",
+        id: "1"
     }]
     const links: any[] = []
 
@@ -41,28 +42,31 @@ export function generateChartInfo(nodes: Leaf[]): ChartInfos {
     nodes.forEach(v => {
         if (v.isOpen) {
             count+=1
-            count = recNodes(v, "root"+1, data, links, count)
+            count = recNodes(v, 1, data, links, count)
         }
     })
 
     return { data, links }
 }
 
-function recNodes(node: Leaf, parent: string, data: any[], links: any[], count: number): number {
+function recNodes(node: Leaf, parent: number, data: any[], links: any[], count: number): number {
     data.push({
-        name: node.name+count,
+        name: node.name,
         value: node.metadata,
+        id: count.toString()
     })
     links.push({
-        source: parent,
-        target: node.name+count
+        source: parent.toString(),
+        target: count.toString()
     })
 
     const parentNB: number = count
 
     node.children.forEach(v => {
         count+=1
-        count = recNodes(v, node.name+parentNB, data, links, count)
+        if (v.isOpen) {
+            count = recNodes(v, parentNB, data, links, count)
+        }
     })
 
     return count
