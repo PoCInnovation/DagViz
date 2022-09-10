@@ -31,8 +31,29 @@ export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
       },
       data,
       links,
+      /*data:  [
+        {
+          name: "salut",
+          value: 10,
+          symbol: "circle",
+          id: 1
+        },
+        {
+          name: "salut2",
+          value: 5,
+          symbol: "circle",
+          id: 2
+        }
+      ],
+        links: [
+          {
+            source: 1,
+            target: 2
+          },
+    ],*/
     },
   };
+  console.log(links)
 
   return (
     <Box sx={{ border: 1, margin: 2 }}>

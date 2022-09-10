@@ -32,37 +32,40 @@ function generateLeaf(node: DagDefinition): Leaf {
 
 export function generateChartInfo(nodes: Leaf[]): ChartInfos {
     const data: any[] = [{
-        name: "root",
+        name: "root1",
         value: "none",
     }]
     const links: any[] = []
 
+    let count: number = 2
     nodes.forEach(v => {
         if (v.isOpen) {
-            recNodes(v, "root", data, links)
-            recursiveChart(v, data, links)
+            count+=1
+            count = recNodes(v, "root"+1, data, links, count)
         }
     })
 
     return { data, links }
 }
 
-function recursiveChart(node: Leaf, data: any[], links: any[]): any {
-    node.children.forEach(v => {
-        recNodes(v, node.name, data, links)
-    })
-}
-
-function recNodes(node: Leaf, parent: string, data: any[], links: any[]): any {
+function recNodes(node: Leaf, parent: string, data: any[], links: any[], count: number): number {
     data.push({
-        name: node.name,
-        value: node.metadata
+        name: node.name+count,
+        value: node.metadata,
     })
     links.push({
         source: parent,
-        target: node.name
+        target: node.name+count
     })
-    recursiveChart(node, data, links)
+
+    const parentNB: number = count
+
+    node.children.forEach(v => {
+        count+=1
+        count = recNodes(v, node.name+parentNB, data, links, count)
+    })
+
+    return count
 }
 
 /*
