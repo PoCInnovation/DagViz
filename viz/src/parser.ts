@@ -40,13 +40,11 @@ export function generateChartInfo(nodes: Leaf[]): ChartInfos {
 
     let count: number = 2
     nodes.forEach(v => {
-        if (v.isOpen) {
-            count+=1
-            count = recNodes(v, 1, data, links, count)
-        }
+        count += 1
+        count = recNodes(v, 1, data, links, count)
     })
 
-    return { data, links }
+    return {data, links}
 }
 
 function recNodes(node: Leaf, parent: number, data: any[], links: any[], count: number): number {
@@ -62,12 +60,11 @@ function recNodes(node: Leaf, parent: number, data: any[], links: any[], count: 
 
     const parentNB: number = count
 
-    node.children.forEach(v => {
-        count+=1
-        if (v.isOpen) {
+    if (node.isOpen) {
+        node.children.forEach(v => {
+            count += 1
             count = recNodes(v, parentNB, data, links, count)
-        }
-    })
-
+        })
+    }
     return count
 }
