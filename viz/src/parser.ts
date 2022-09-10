@@ -67,27 +67,3 @@ function recNodes(node: Leaf, parent: string, data: any[], links: any[], count: 
 
     return count
 }
-
-/*
- [
-                {
-                    name: "salut",
-                    value: 10,
-                    symbol: "circle",
-                },
-                {
-                    name: "salut2",
-                    value: 5,
-                    symbol: "circle",
-                }
-            ],
- */
-
-/*
-: [
-                {
-                    source: "salut",
-                    target: "salut2",
-                }
-            ]
- */
