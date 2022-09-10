@@ -9,7 +9,7 @@ interface DagVizualizerProps {
 }
 
 export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
-  const { data, links } = generateChartInfo(props.flo.children);
+  const { data, links } = generateChartInfo(props.flo.children ? props.flo.children : []);
   const options = {
     tooltip: [
       {
@@ -33,7 +33,6 @@ export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
       links,
     },
   };
-  console.log(links)
 
   return (
     <Box sx={{ border: 1, margin: 2 }}>

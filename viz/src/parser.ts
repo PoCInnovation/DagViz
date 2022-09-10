@@ -18,14 +18,18 @@ function generateLeaf(node: DagDefinition): Leaf {
     const leaf: Leaf = {
         name: node.name,
         checked: 0,
-        isOpen: false,
-        children: [],
         metadata: {
             def: node.def,
             file: node.file
         }
     }
-    node.dependencies.forEach(n => leaf.children.push(generateLeaf(n)))
+
+    if (node.dependencies.length !== 0) {
+        leaf['children'] = []
+        leaf['isOpen'] = false
+    }
+
+    node.dependencies.forEach(n => leaf.children?.push(generateLeaf(n)))
 
     return leaf
 }
@@ -64,7 +68,7 @@ function recNodes(node: Leaf, parent: number, data: EchartsNode[], links: Echart
     const parentNB: number = count
 
     if (node.isOpen) {
-        node.children.forEach(v => {
+        node.children?.forEach(v => {
             count += 1
             count = recNodes(v, parentNB, data, links, count)
         })

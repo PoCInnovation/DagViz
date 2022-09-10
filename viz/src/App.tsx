@@ -9,7 +9,7 @@ import { DagResults, Leaf } from "./types";
 
 const parsed = content as DagResults;
 const initialTree: Leaf[] = generateTree(parsed);
-const staticData = {
+const staticData: Leaf = {
   name: "root",
   isOpen: true,
   checked: 0,
