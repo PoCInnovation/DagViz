@@ -9,7 +9,7 @@ interface DagVizualizerProps {
 }
 
 export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
-  const { data, links } = generateChartInfo(props.data.children, props.file);
+  const { data, links } = generateChartInfo(props.file, props.data);
   const options = {
     tooltip: [
       {

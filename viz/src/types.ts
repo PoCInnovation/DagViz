@@ -15,15 +15,17 @@ export type Metadata = {
     file: string
 }
 
-export type Leaf = {
+interface BaseLeaf {
     name: string
     depth: number
     color: string
     checked: number
-    isOpen?: boolean
-    children?: Leaf[]
     metadata: Metadata
 }
+
+export type Leaf =
+    BaseLeaf & { isOpen: true, children: Leaf[] } |
+    BaseLeaf & { isOpen: false }
 
 export type EchartsLink = {
     source: string,
@@ -31,7 +33,10 @@ export type EchartsLink = {
 }
 
 export type EchartsNode = {
-    name: string
-    value: Metadata
     id: string
+    name: string
+    value: string | Metadata
+    itemStyle?: {
+        color?: string
+    }
 }

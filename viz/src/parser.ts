@@ -1,13 +1,14 @@
 import {DagDefinition, DagResults, EchartsLink, EchartsNode, Leaf} from './types';
+import {getColor, initColors, rootColor} from "./colors";
 
 interface ChartInfos {
     data: EchartsNode[],
     links: EchartsLink[],
 }
 
-export function generateChartInfo(nodes: Leaf[], fileName: string): ChartInfos {
+export function generateChartInfo(fileName: string, rootNode: Leaf): ChartInfos {
     initColors()
-    const data: any[] = [{
+    const data: EchartsNode[] = [{
         name: fileName,
         value: "none",
         id: "1",
@@ -15,14 +16,15 @@ export function generateChartInfo(nodes: Leaf[], fileName: string): ChartInfos {
             color: rootColor
         }
     }]
-    const links: any[] = []
 
+    const links: EchartsLink[] = []
     let count: number = 2
-    nodes.forEach(v => {
-        count += 1
-        count = recNodes(v, 1, data, links, count)
-    })
-
+    if (rootNode.isOpen) {
+        rootNode.children.forEach(v => {
+            count += 1
+            count = recNodes(v, 1, data, links, count)
+        })
+    }
 
     return {data, links}
 }
@@ -40,6 +42,8 @@ function generateLeaf(node: DagDefinition, depth: number, parentColor: string): 
         name: node.name,
         depth: depth,
         color: getColor(depth, parentColor),
+        isOpen: node.dependencies.length > 0,
+        children: [],
         checked: 0,
         metadata: {
             def: node.def,
@@ -47,17 +51,13 @@ function generateLeaf(node: DagDefinition, depth: number, parentColor: string): 
         }
     }
 
-    if (node.dependencies.length !== 0) {
-        leaf.children = []
-        leaf.isOpen = false
+    if (leaf.isOpen) {
+        node.dependencies.forEach(n => leaf.children?.push(generateLeaf(n, depth + 1, leaf.color)))
     }
-
-    node.dependencies.forEach(n => leaf.children.push(generateLeaf(n, depth + 1, leaf.color)))
-
     return leaf
 }
 
-function recNodes(node: Leaf, parent: number, data: any[], links: any[], count: number): number {
+function recNodes(node: Leaf, parent: number, data: EchartsNode[], links: EchartsLink[], count: number): number {
     data.push({
         id: count.toString(),
         name: node.name,
