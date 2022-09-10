@@ -1,11 +1,11 @@
-import {DagDefinition, DagResults, Leaf} from './types';
+import {DagDefinition, DagResults, EchartsLink, EchartsNode, Leaf} from './types';
 
 interface ChartInfos {
-    data: any[],
-    links: any[],
+    data: EchartsNode[],
+    links: EchartsLink[],
 }
 
-export function generateTree(dag: DagResults): any {
+export function generateTree(dag: DagResults): Leaf[] {
     const tree: Leaf[] = []
     dag.dag.forEach(n => {
             tree.push(generateLeaf(n))
@@ -31,12 +31,15 @@ function generateLeaf(node: DagDefinition): Leaf {
 }
 
 export function generateChartInfo(nodes: Leaf[]): ChartInfos {
-    const data: any[] = [{
+    const data: EchartsNode[] = [{
         name: "root",
-        value: "none",
+        value: {
+            def: "coucou",
+            file: ""
+        },
         id: "1"
     }]
-    const links: any[] = []
+    const links: EchartsLink[] = []
 
     let count: number = 2
     nodes.forEach(v => {
@@ -47,7 +50,7 @@ export function generateChartInfo(nodes: Leaf[]): ChartInfos {
     return {data, links}
 }
 
-function recNodes(node: Leaf, parent: number, data: any[], links: any[], count: number): number {
+function recNodes(node: Leaf, parent: number, data: EchartsNode[], links: EchartsLink[], count: number): number {
     data.push({
         name: node.name,
         value: node.metadata,
