@@ -6,33 +6,40 @@ import content from "./data/data.json";
 import "./index.css";
 import { generateTree } from "./parser";
 import { DagResults, Leaf } from "./types";
-import {rootColor} from "./colors";
+import {baseColors, rootColor} from "./colors";
 
 const parsed = content as DagResults;
-const initialTree: Leaf[] = generateTree(parsed);
-const staticData: Leaf = {
+const firstLeaf: Leaf = {
   name: "root",
   depth: 0,
   color: rootColor,
-  isOpen: true,
+  colorParams: {
+    tintArray: baseColors,
+    count: 0,
+  },
+  isOpen: false,
   checked: 0,
-  children: initialTree,
   metadata: {
     file: "root",
-    def: "salut",
+    def: "definition",
   },
-};
+}
+const initialTree: Leaf[] = generateTree(parsed, firstLeaf);
+const staticTree: Leaf = {
+  ...firstLeaf,
+  isOpen: true,
+  children: initialTree
+}
+
 
 function App() {
-  const [treeState, setTreeState] = useState(staticData);
-
-  console.log(treeState)
+  const [treeState, setTreeState] = useState(staticTree);
 
   return (
     <>
       <TopBar path="temporary.cue" />
       <DagVizualizer file={content.file} data={treeState} />
-      <Tree data={staticData} onChange={setTreeState} />
+      <Tree data={staticTree} onChange={setTreeState} />
     </>
   );
 }

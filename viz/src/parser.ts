@@ -1,5 +1,5 @@
 import {DagDefinition, DagResults, EchartsLink, EchartsNode, Leaf} from './types';
-import {getColor, initColors, rootColor} from "./colors";
+import {generateColors, rootColor} from "./colors";
 
 interface ChartInfos {
     data: EchartsNode[],
@@ -7,7 +7,6 @@ interface ChartInfos {
 }
 
 export function generateChartInfo(fileName: string, rootNode: Leaf): ChartInfos {
-    initColors()
     const data: EchartsNode[] = [{
         name: fileName,
         value: "none",
@@ -29,19 +28,19 @@ export function generateChartInfo(fileName: string, rootNode: Leaf): ChartInfos 
     return {data, links}
 }
 
-export function generateTree(dag: DagResults): Leaf[] {
+export function generateTree(dag: DagResults, firstLeaf: Leaf): Leaf[] {
     const tree: Leaf[] = []
     dag.dag.forEach(n => {
-        tree.push(generateLeaf(n, 1, rootColor))
+        tree.push(generateLeaf(n, firstLeaf))
     })
     return tree
 }
 
-function generateLeaf(node: DagDefinition, depth: number, parentColor: string): Leaf {
+function generateLeaf(node: DagDefinition, parentLeaf: Leaf): Leaf {
     const leaf: Leaf = {
+        ...parentLeaf,
         name: node.name,
-        depth: depth,
-        color: getColor(depth, parentColor),
+        depth: parentLeaf.depth + 1,
         isOpen: node.dependencies.length > 0,
         children: [],
         checked: 0,
@@ -50,9 +49,10 @@ function generateLeaf(node: DagDefinition, depth: number, parentColor: string): 
             file: node.file
         }
     }
+    generateColors(leaf, parentLeaf)
 
     if (leaf.isOpen) {
-        node.dependencies.forEach(n => leaf.children?.push(generateLeaf(n, depth + 1, leaf.color)))
+        node.dependencies.forEach(n => leaf.children?.push(generateLeaf(n, leaf)))
     }
     return leaf
 }

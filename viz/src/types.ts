@@ -19,6 +19,7 @@ interface BaseLeaf {
     name: string
     depth: number
     color: string
+    colorParams: ColorParams
     checked: number
     metadata: Metadata
 }
@@ -26,6 +27,11 @@ interface BaseLeaf {
 export type Leaf =
     BaseLeaf & { isOpen: true, children: Leaf[] } |
     BaseLeaf & { isOpen: false }
+
+export type ColorParams = {
+    tintArray: string[]
+    count: number
+}
 
 export type EchartsLink = {
     source: string,
