@@ -14,7 +14,7 @@ const firstLeaf: Leaf = {
   depth: 0,
   color: rootColor,
   colorParams: {
-    tintArray: baseColors,
+    shadeArray: baseColors,
     count: 0,
   },
   isOpen: false,
@@ -37,7 +37,7 @@ function App() {
 
   return (
     <>
-      <TopBar path="temporary.cue" />
+      <TopBar path={parsed.file} />
       <DagVizualizer file={content.file} data={treeState} />
       <Tree data={staticTree} onChange={setTreeState} />
     </>

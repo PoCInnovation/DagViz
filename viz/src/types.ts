@@ -29,7 +29,7 @@ export type Leaf =
     BaseLeaf & { isOpen: false }
 
 export type ColorParams = {
-    tintArray: string[]
+    shadeArray: string[]
     count: number
 }
 
@@ -42,6 +42,7 @@ export type EchartsNode = {
     id: string
     name: string
     value: string | Metadata
+    symbolSize: number
     itemStyle?: {
         color?: string
     }

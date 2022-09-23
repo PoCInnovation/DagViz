@@ -35,8 +35,6 @@ export default function DagVizualizer(props: DagVizualizerProps): JSX.Element {
   };
 
   return (
-    <Box sx={{ border: 1, margin: 1 }}>
       <EChartsReact option={options} />
-    </Box>
   );
 }

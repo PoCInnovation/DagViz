@@ -7,6 +7,7 @@ export const maxDepth = 3;
 export const baseColors: string[] = [
     '#0000ff',
     '#00ff00',
+    '#ffff00',
     '#ff0000',
     '#ffa500',
     '#800080',
@@ -16,21 +17,20 @@ export const baseColors: string[] = [
 ];
 
 type ColorResults = {
-    colorTint: string[]
+    colorShade: string[]
 }
 
 export function generateColors(currentLeaf: Leaf, parentLeaf: Leaf) {
-    console.log("generateColors", currentLeaf, parentLeaf);
     if (currentLeaf.depth <= maxDepth) {
-        const colorGen: string = parentLeaf.colorParams.tintArray[parentLeaf.colorParams.count];
-        const variations = colorVariations( { color: colorGen }, { steps: 8, includedFns: ['tint'], excludedFns: [] })
+        const colorGen: string = parentLeaf.colorParams.shadeArray[parentLeaf.colorParams.count];
+        const variations = colorVariations( { color: colorGen }, { steps: 8, includedFns: ['shade'], excludedFns: [] })
 
         currentLeaf.color = colorGen;
         currentLeaf.colorParams = {
-            tintArray: (variations as ColorResults).colorTint,
+            shadeArray: (variations as ColorResults).colorShade,
             count: 0
         }
-        parentLeaf.colorParams.count = parentLeaf.colorParams.count === parentLeaf.colorParams.tintArray.length - 1 ? 0 : parentLeaf.colorParams.count + 1;
+        parentLeaf.colorParams.count = parentLeaf.colorParams.count === parentLeaf.colorParams.shadeArray.length - 1 ? 0 : parentLeaf.colorParams.count + 1;
     } else {
         currentLeaf.color = parentLeaf.color
     }
@@ -41,7 +41,7 @@ export function generateColors(currentLeaf: Leaf, parentLeaf: Leaf) {
             return baseColorsArray[baseColorCount++]
         case 2:
             const baseColor = baseColorMap.get(parentColor) || "blue";
-            return colors[baseColor + "Tint"][0];
+            return colors[baseColor + "shade"][0];
         default:
             return parentColor
     }

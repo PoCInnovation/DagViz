@@ -11,6 +11,7 @@ export function generateChartInfo(fileName: string, rootNode: Leaf): ChartInfos 
         name: fileName,
         value: "none",
         id: "1",
+        symbolSize: 40,
         itemStyle: {
             color: rootColor
         }
@@ -62,6 +63,7 @@ function recNodes(node: Leaf, parent: number, data: EchartsNode[], links: Echart
         id: count.toString(),
         name: node.name,
         value: node.metadata,
+        symbolSize: Math.max(40 - node.depth * 10, 10),
         itemStyle: {
             color: node.color
         }
