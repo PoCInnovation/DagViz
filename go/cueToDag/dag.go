@@ -2,6 +2,7 @@ package cueToDag
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/PoCInnovation/DagViz/dag"
 )
@@ -34,8 +35,16 @@ func (r *CueRoot) PrintDag(i interface{}) {
 	}
 }
 
+func formatDef(s string) string {
+	s = strings.Replace(s, "\\", "\\\\", -1)
+	s = strings.Replace(s, "\"", "\\\"", -1)
+	s = strings.Replace(s, "\n", "\\n", -1)
+	s = strings.Replace(s, "\t", "\\t", -1)
+	return s
+}
+
 func fmtPrintCueJson(d NodeDefinition, links []*dag.Node) {
-	fmt.Printf("{\"name\":\"%s\", \"file\":\"%s\", \"def\":\"%s\", \"dependencies\": ", d.name, d.file, "def")
+	fmt.Printf("{\"name\":\"%s\", \"file\":\"%s\", \"def\":\"%s\", \"dependencies\": ", d.name, d.file, formatDef(d.def))
 	PrintJson(links)
 	fmt.Print("}")
 }
@@ -46,7 +55,7 @@ func PrintJson(members []*dag.Node) {
 	for index, m := range members {
 		if m.Value != nil {
 			if index != 0 {
-				print(",")
+				fmt.Print(",")
 			}
 			v := m.Value.(NodeDefinition)
 			fmtPrintCueJson(v, m.Links)

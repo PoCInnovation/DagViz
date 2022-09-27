@@ -34,7 +34,7 @@ go test -v -race
 ### Usage
 
 ```sh
-dagviz  {$path_to_cue_directory}
+dagviz {$path_to_cue_directory}
 ```
 
 ## Get involved

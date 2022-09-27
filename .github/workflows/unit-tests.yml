@@ -12,7 +12,7 @@ jobs:
       - name: Repository checkout
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: apk add build-base ; go install
+        run: apk add build-base; cd ./go; go install
       - name: Unit tests
-        run: go test -v ./...
+        run: cd ./go; go test -v ./...
         timeout-minutes: 2

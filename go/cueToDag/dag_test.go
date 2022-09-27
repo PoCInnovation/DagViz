@@ -10,11 +10,11 @@ import (
 )
 
 func TestCreateCueDag(t *testing.T) {
-	CueDir := "../tests/package_test"
+	CueDir := "../samples/package_test"
 	context := cuecontext.New()
 	programs, err := LoadFile(context, CueDir, nil)
 	if err != nil {
-		return
+		t.Fail()
 	}
 
 	infos := ExtractInfos(programs)

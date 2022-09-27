@@ -10,3 +10,7 @@
 cuetojson
 !cuetojson/
 test.json
+
+dagviz.sh
+dagviz
+data.json
