@@ -1,11 +1,12 @@
 # DagViz
 
-The objective of this project is to display any infos about Go program using dags.
+The objective of this project is to display any infos relative to the definitions of a cue program and it's dependencies using dags.
+
+![image](https://user-images.githubusercontent.com/71719097/192021922-0291aac4-12ed-4f92-a0ea-2bc49b9e19d6.png)
 
 ## How does it work?
 
-Thanks to CueAPI we can retrieve any infos about our program and we create a dag using
-these infos.
+Thanks to the CueAPI we can retrieve any infos about our program and we create a dag using these infos, and using an electron-app we can render it.
 
 ## Getting Started
 
@@ -26,13 +27,14 @@ cd DagViz
 To run the tests :
 
 ```sh
-go test -v -race ./...
+cd go
+go test -v -race
 ```
 
 ### Usage
 
 ```sh
-dagviz [$path_to_cue_package]
+dagviz {$path_to_cue_directory}
 ```
 
 ## Get involved
